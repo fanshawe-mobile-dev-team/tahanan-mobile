@@ -1,5 +1,5 @@
-import React from "react";
-import { Text } from "react-native";
+import React from 'react';
+import { Text } from 'react-native';
 
 function SearchHomeScreen() {
   return <Text>SearchHomeScreen</Text>;
