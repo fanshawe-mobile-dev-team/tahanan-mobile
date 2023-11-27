@@ -1,0 +1,31 @@
+{
+  "liveServer.settings.donotVerifyTags": true,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "workbench.sideBar.location": "right",
+  "eslint.format.enable": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.tabSize": 2,
+  "editor.formatOnPaste": true,
+  "editor.fontWeight": "normal",
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "editor.formatOnSave": true,
+  "git.openRepositoryInParentFolders": "never",
+  "yaml.schemas": {
+    "file:///Users/Fanshawe/.vscode/extensions/atlassian.atlascode-3.0.8/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+  },
+  "atlascode.jira.jqlList": [
+    {
+      "id": "bf56279c-732b-46ee-a99c-b44920cd9989",
+      "enabled": true,
+      "name": "My info3172-cloud9 Issues",
+      "query": "assignee = currentUser() AND resolution = Unresolved ORDER BY lastViewed DESC",
+      "siteId": "4768b9f3-24f0-4452-b4f4-4e206b1018d7",
+      "monitor": true
+    }
+  ]
+}
