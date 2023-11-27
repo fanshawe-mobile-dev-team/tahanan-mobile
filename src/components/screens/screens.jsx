@@ -1,4 +1,6 @@
+import AssignTaskScreen from './AssignTask/AssignTaskScreen';
 import CreateHomeScreen from './CreateHome/CreateHomeScreen';
+import CreateTaskScreen from './CreateTask/CreateTaskScreen';
 import DashboardScreen from './Dashboard/DashboardScreen';
 import JoinHomeScreen from './JoinHome/JoinHomeScreen';
 import LoginScreen from './Login/LoginScreen';
@@ -6,6 +8,7 @@ import PostRegisterScreen from './PostRegister/PostRegisterScreen';
 import ProfileScreen from './Profile/ProfileScreen';
 import RegisterScreen from './Register/RegisterScreen';
 import SearchHomeScreen from './SearchHome/SearchHomeScreen';
+import TaskScreen from './Task/TaskScreen';
 import TaskListScreen from './TaskList/TaskListScreen';
 
 export default [
@@ -17,5 +20,8 @@ export default [
   { name: 'JoinHome', component: JoinHomeScreen },
   { name: 'Dashboard', component: DashboardScreen, options: { headerShown: false } },
   { name: 'TaskList', component: TaskListScreen },
+  { name: 'Task', component: TaskScreen },
+  { name: 'CreateTask', component: CreateTaskScreen },
+  { name: 'AssignTask', component: AssignTaskScreen },
   { name: 'Profile', component: ProfileScreen },
 ];
