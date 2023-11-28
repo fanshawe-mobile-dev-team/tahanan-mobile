@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "runningcoder.react-snippets",
+    "burkeholland.simple-react-snippets",
+    "wayou.vscode-todo-highlight"
+  ]
+}

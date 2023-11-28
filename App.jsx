@@ -4,6 +4,7 @@ import { StatusBar } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import React, { useRef } from 'react';
 import screens from './src/components/screens/screens';
+import defaultTheme from './src/theme/defaultTheme';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,8 +16,15 @@ export default function App() {
   };
 
   return (
-
-    <NavigationContainer ref={navigationRef}>
+    <NavigationContainer ref={navigationRef} theme={defaultTheme}>
+      <SelectDropdown
+        data={screens}
+        buttonStyle={{ width: '100%', backgroundColor: 'black' }}
+        buttonTextStyle={{ color: 'white' }}
+        onSelect={handelSelectRoute}
+        buttonTextAfterSelection={(item) => item.name}
+        rowTextForSelection={(item) => item.name}
+      />
       <Stack.Navigator>
         {screens.map((screen) => (
           <Stack.Screen
@@ -28,14 +36,7 @@ export default function App() {
         ))}
       </Stack.Navigator>
       <StatusBar />
-      <SelectDropdown
-        data={screens}
-        buttonStyle={{ width: '100%', backgroundColor: 'black' }}
-        buttonTextStyle={{ color: 'white' }}
-        onSelect={handelSelectRoute}
-        buttonTextAfterSelection={(item) => item.name}
-        rowTextForSelection={(item) => item.name}
-      />
+
     </NavigationContainer>
   );
 }
