@@ -1,16 +1,21 @@
 import React, { useRef, useState } from 'react';
 import {
-  Image, ScrollView, StyleSheet, Text, View,
+  Image, ScrollView, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
+import colors from '../../../theme/colors';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.background.light,
+    padding: 20,
+  },
+  imageContainer: {
+    marginBottom: 20,
   },
   image: {
-    width: '100vw',
-    aspectRatio: 1,
+    aspectRatio: 3 / 2,
+    borderRadius: 24,
   },
   title: {
     fontWeight: 'bold',
@@ -19,10 +24,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   form: {
-    padding: 20,
+    marginBottom: 20,
   },
   input: {
     marginBottom: 20,
+  },
+  signupContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  signupButton: {
+    color: colors.primary.main,
+    fontWeight: 'bold',
   },
 });
 
@@ -41,12 +54,13 @@ function LoginScreen() {
 
   return (
     <ScrollView automaticallyAdjustKeyboardInsets style={styles.container}>
-      <Image source={{ uri: 'https://picsum.photos/600' }} style={styles.image} />
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: 'https://picsum.photos/600' }} style={styles.image} />
+      </View>
       <View style={styles.form}>
         <Text style={styles.title}>Login</Text>
         <TextInput
           style={styles.input}
-          mode="outlined"
           label="Username"
           placeholder="Enter username"
           value={username}
@@ -56,7 +70,6 @@ function LoginScreen() {
         <TextInput
           ref={passwordRef}
           style={styles.input}
-          mode="outlined"
           label="Password"
           placeholder="Enter password"
           secureTextEntry
@@ -65,6 +78,12 @@ function LoginScreen() {
           onSubmitEditing={handleSubmit}
         />
         <Button mode="contained" onPress={handleSubmit}>Login</Button>
+      </View>
+      <View style={styles.signupContainer}>
+        <Text>No account yet? </Text>
+        <TouchableOpacity>
+          <Text style={styles.signupButton}>Sign-Up</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
