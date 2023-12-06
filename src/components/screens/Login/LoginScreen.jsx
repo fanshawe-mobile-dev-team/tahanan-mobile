@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import {
-  Image, ScrollView, StyleSheet, Text, TouchableOpacity, View,
+  Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import colors from '../../../theme/colors';
@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.background.light,
     padding: 20,
+    // flex: 1,
   },
   imageContainer: {
     marginBottom: 20,
@@ -59,39 +60,41 @@ function LoginScreen() {
   };
 
   return (
-    <ScrollView automaticallyAdjustKeyboardInsets style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: 'https://picsum.photos/600' }} style={styles.image} />
-      </View>
-      <View style={styles.form}>
-        <Text style={styles.title}>Login</Text>
-        <TextInput
-          style={styles.input}
-          label="Email"
-          placeholder="Enter email"
-          value={email}
-          onChangeText={setEmail}
-          onSubmitEditing={() => passwordRef.current.focus()}
-        />
-        <TextInput
-          ref={passwordRef}
-          style={styles.input}
-          label="Password"
-          placeholder="Enter password"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-          onSubmitEditing={handleSubmit}
-        />
-        <Button mode="contained" onPress={handleSubmit}>Login</Button>
-      </View>
-      <View style={styles.signupContainer}>
-        <Text>No account yet? </Text>
-        <TouchableOpacity>
-          <Text style={styles.signupButton}>Sign-Up</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+    <KeyboardAvoidingView style={styles.container}>
+      <ScrollView>
+        <View style={styles.imageContainer}>
+          <Image source={{ uri: 'https://picsum.photos/600' }} style={styles.image} />
+        </View>
+        <View style={styles.form}>
+          <Text style={styles.title}>Login</Text>
+          <TextInput
+            style={styles.input}
+            label="Email"
+            placeholder="Enter email"
+            value={email}
+            onChangeText={setEmail}
+            onSubmitEditing={() => passwordRef.current.focus()}
+          />
+          <TextInput
+            ref={passwordRef}
+            style={styles.input}
+            label="Password"
+            placeholder="Enter password"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+            onSubmitEditing={handleSubmit}
+          />
+          <Button mode="contained" onPress={handleSubmit}>Login</Button>
+        </View>
+        <View style={styles.signupContainer}>
+          <Text>No account yet? </Text>
+          <TouchableOpacity>
+            <Text style={styles.signupButton}>Sign-Up</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
