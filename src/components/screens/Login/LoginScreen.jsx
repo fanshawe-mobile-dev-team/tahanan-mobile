@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import colors from '../../../theme/colors';
+import { loginUser } from '../../../utils/api/authApi';
 
 const styles = StyleSheet.create({
   container: {
@@ -40,16 +41,21 @@ const styles = StyleSheet.create({
 });
 
 function LoginScreen() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('test@email.com');
+  const [password, setPassword] = useState('password');
 
   const passwordRef = useRef();
 
-  // TODO: submit function
-  const handleSubmit = () => {
-    const input = { username, password };
+  const handleSubmit = async () => {
+    if (!email || !password) {
+      console.log('Invalid');
+      return;
+    }
 
-    console.log(input);
+    const user = await loginUser(email, password);
+
+    console.log('SIGN IN', user);
+    // TODO: Navigate to Dashboard
   };
 
   return (
@@ -61,10 +67,10 @@ function LoginScreen() {
         <Text style={styles.title}>Login</Text>
         <TextInput
           style={styles.input}
-          label="Username"
-          placeholder="Enter username"
-          value={username}
-          onChangeText={setUsername}
+          label="Email"
+          placeholder="Enter email"
+          value={email}
+          onChangeText={setEmail}
           onSubmitEditing={() => passwordRef.current.focus()}
         />
         <TextInput
