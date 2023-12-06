@@ -1,31 +1,45 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  initializeAuth,
-  getReactNativePersistence,
 } from 'firebase/auth';
-import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
-import firebaseApp from './firebaseConfig';
+import {
+  doc, setDoc,
+} from 'firebase/firestore';
+import { auth, db } from './firebaseConfig';
 
-const auth = initializeAuth(firebaseApp, {
-  persistence: getReactNativePersistence(ReactNativeAsyncStorage),
-});// const analytics = getAnalytics(app);
-
-export const registerUser = async (email, password) => {
+export const loginUser = async (email, password) => {
   try {
-    const result = await createUserWithEmailAndPassword(auth, email, password);
+    const { user } = await signInWithEmailAndPassword(auth, email, password);
 
-    return result.user;
+    return user;
   } catch ({ code, message }) {
     console.log({ code, message });
     return null;
   }
 };
 
-export const loginUser = async (email, password) => {
+export const registerUser = async (input) => {
   try {
-    const { user } = await signInWithEmailAndPassword(auth, email, password);
+    const {
+      firstName, lastName, email, password, username, phone,
+    } = input;
+    const { user: newUser } = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
 
+    if (newUser) {
+      await setDoc(doc(db, 'users', newUser.uid), {
+        firstName,
+        lastName,
+        email,
+        username,
+        phone,
+      });
+    }
+
+    const user = await loginUser(email, password);
     return user;
   } catch ({ code, message }) {
     console.log({ code, message });
