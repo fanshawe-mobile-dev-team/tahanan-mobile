@@ -36,7 +36,6 @@ export default function App() {
         ))}
       </Stack.Navigator>
       <StatusBar />
-
     </NavigationContainer>
   );
 }

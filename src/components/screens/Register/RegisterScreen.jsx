@@ -1,29 +1,10 @@
 import React, { useRef, useState } from 'react';
 import {
-  View, Text, StyleSheet, ScrollView, KeyboardAvoidingView,
+  View, Text, ScrollView, KeyboardAvoidingView,
 } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
-import PropTypes from 'prop-types';
 import { registerUser } from '../../../utils/api/authApi';
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 16,
-    paddingVertical: 32,
-    flex: 1,
-  },
-  input: {
-    marginBottom: 20,
-  },
-  heading: {
-    fontWeight: 'bold',
-    marginBottom: 10,
-    fontSize: 24,
-  },
-  subheading: {
-    marginBottom: 28,
-  },
-});
+import commonStyles from '../../../theme/commonStyles';
 
 function RegisterScreen({ navigation }) {
   const [email, setEmail] = useState('test@email.com');
@@ -57,15 +38,15 @@ function RegisterScreen({ navigation }) {
   };
 
   return (
-    <KeyboardAvoidingView style={[styles.container]}>
+    <KeyboardAvoidingView style={[commonStyles.screenContainer]}>
       <ScrollView>
-        <Text style={styles.heading}>Register an account</Text>
-        <Text style={styles.subheading}>
+        <Text style={commonStyles.displayHeading}>Register an account</Text>
+        <Text style={commonStyles.displaySubheading}>
           Enter the following information to create your account
         </Text>
         <View>
           <TextInput
-            style={styles.input}
+            style={commonStyles.commonInput}
             label="Email"
             placeholder="Enter email"
             value={email}
@@ -74,7 +55,7 @@ function RegisterScreen({ navigation }) {
           />
           <TextInput
             ref={passwordRef}
-            style={styles.input}
+            style={commonStyles.commonInput}
             label="Password"
             placeholder="Enter password"
             secureTextEntry
@@ -84,7 +65,7 @@ function RegisterScreen({ navigation }) {
           />
           <TextInput
             ref={phoneRef}
-            style={styles.input}
+            style={commonStyles.commonInput}
             label="Phone"
             placeholder="Enter phone number"
             value={phone}
@@ -93,7 +74,7 @@ function RegisterScreen({ navigation }) {
           />
           <TextInput
             ref={usernameRef}
-            style={styles.input}
+            style={commonStyles.commonInput}
             label="Username"
             placeholder="Enter username"
             value={username}
@@ -102,7 +83,7 @@ function RegisterScreen({ navigation }) {
           />
           <TextInput
             ref={firstNameRef}
-            style={styles.input}
+            style={commonStyles.commonInput}
             label="First Name"
             placeholder="Enter first name"
             value={firstName}
@@ -111,7 +92,7 @@ function RegisterScreen({ navigation }) {
           />
           <TextInput
             ref={lastNameRef}
-            style={styles.input}
+            style={commonStyles.commonInput}
             label="Last Name"
             placeholder="Enter last name"
             value={lastName}
