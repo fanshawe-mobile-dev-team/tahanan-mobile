@@ -38,8 +38,8 @@ function RegisterScreen({ navigation }) {
   };
 
   return (
-    <KeyboardAvoidingView style={[commonStyles.screenContainer]}>
-      <ScrollView>
+    <KeyboardAvoidingView style={[commonStyles.keybardAvoiding]}>
+      <ScrollView style={commonStyles.screenContainer}>
         <Text style={commonStyles.displayHeading}>Register an account</Text>
         <Text style={commonStyles.displaySubheading}>
           Enter the following information to create your account

@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function LoginScreen() {
+function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('test@email.com');
   const [password, setPassword] = useState('password');
 
@@ -89,7 +89,7 @@ function LoginScreen() {
         </View>
         <View style={styles.signupContainer}>
           <Text>No account yet? </Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
             <Text style={styles.signupButton}>Sign-Up</Text>
           </TouchableOpacity>
         </View>
