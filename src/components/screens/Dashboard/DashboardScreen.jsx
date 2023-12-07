@@ -1,11 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState } from 'react';
 import {
   Text,
   StyleSheet,
   ScrollView,
   View,
   KeyboardAvoidingView,
-} from "react-native";
+} from 'react-native';
 import {
   Button,
   TextInput,
@@ -13,8 +13,8 @@ import {
   MD3Colors,
   Icon,
   Card,
-} from "react-native-paper";
-//import { useSafeAreaInsets } from 'react-native-safe-area-context';
+} from 'react-native-paper';
+// import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const BOTTOM_APPBAR_HEIGHT = 80;
 const MEDIUM_FAB_HEIGHT = 56;
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   heading: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 10,
     fontSize: 24,
   },

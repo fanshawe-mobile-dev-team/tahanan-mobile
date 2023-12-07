@@ -3,7 +3,7 @@ import {
   View, Text, StyleSheet, ScrollView, KeyboardAvoidingView,
 } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
-
+import { DatePickerInput } from 'react-native-paper-dates';
 
 const styles = StyleSheet.create({
   container: {
@@ -24,20 +24,8 @@ const styles = StyleSheet.create({
   },
 });
 
-function CreateTaskScreen() {
-
-  //Randomize taskId
-  const generateRandomTaskId = () => {
-  const timestamp = new Date().getTime(); // Get current timestamp
-  const randomNumber = Math.floor(Math.random() * 1000); // Generate a random number between 0 and 999
-
-  // Combine timestamp and random number to create a unique ID
-  const taskId = `task_${timestamp}_${randomNumber}`;
-
-  return taskId;
-};
-
-  const [taskId, setTaskId] = useState(generateRandomTaskId());
+function CreateTaskScreen({ navigation }) {
+  const [taskId, setTaskId] = useState();
   const [creatorId, setCreatorId] = useState('testUser');
   const [userIds, setUserIds] = useState([]);
   const [homeId, setHomeId] = useState('homeId');
@@ -51,12 +39,12 @@ function CreateTaskScreen() {
   const descriptionRef = useRef();
   const dueAtRef = useRef();
 
-  //Set Current Date to Task
+  // Set Current Date to Task
   useEffect(() => {
     setCreatedAt(new Date());
   }, []);
 
-  //Assign Users to Task
+  // Assign Users to Task
   const addUser = (userId) => {
     setUserIds((prevUserIds) => [...prevUserIds, userId]);
   };
@@ -74,15 +62,15 @@ function CreateTaskScreen() {
       isCompleted,
     };
 
-    //const task = await createTask(input);
-    console.log('CREATE TASK INPUT', user);
+    // const task = await createTask(input);
+    // console.log('CREATE TASK INPUT', user);
 
-    // 
+    //
     navigation.navigate('TaskList');
   };
 
   return (
-     <KeyboardAvoidingView style={[styles.container]}>
+    <KeyboardAvoidingView style={[styles.container]}>
       <ScrollView>
         <Text style={styles.heading}>Create a New Task</Text>
         <Text style={styles.subheading}>
@@ -115,17 +103,17 @@ function CreateTaskScreen() {
             onChangeText={setUserIds}
             onSubmitEditing={() => dueAtRef.current.focus()}
           />
-          <TextInput
-            ref={dueAtRef}
-            style={styles.input}
-            label="Due Date"
-            placeholder="Set Due Date"
+          <DatePickerInput
+            locale="en"
+            label="Birthdate"
             value={dueAt}
-            onChangeText={setDueAt}
+            onChange={(d) => setDueAt(d)}
+            inputMode="start"
           />
-          
+
           <Button mode="contained" onPress={handleSubmit}>Add Task</Button>
-          <Button style="buttonColor: '#777680'" mode="contained" onPress={navigation.navigate('TaskList')}>Cancel</Button>
+
+          <Button mode="contained" onPress={navigation.navigate('TaskList')}>Cancel</Button>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

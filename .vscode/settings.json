@@ -28,7 +28,4 @@
       "monitor": true
     }
   ],
-  "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
 }
