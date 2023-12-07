@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 });
 
 function CreateTaskScreen({ navigation }) {
-  const [taskId, setTaskId] = useState();
+  // const [taskId, setTaskId] = useState();
   const [creatorId, setCreatorId] = useState('testUser');
   const [userIds, setUserIds] = useState([]);
   const [homeId, setHomeId] = useState('homeId');
@@ -39,19 +39,21 @@ function CreateTaskScreen({ navigation }) {
   const descriptionRef = useRef();
   const dueAtRef = useRef();
 
+  // TODO: set current date to task
   // Set Current Date to Task
   useEffect(() => {
     setCreatedAt(new Date());
   }, []);
 
+  // TODO: set assigned users to task
   // Assign Users to Task
   const addUser = (userId) => {
     setUserIds((prevUserIds) => [...prevUserIds, userId]);
   };
 
+  // TODO: Handle submit function
   const handleSubmit = async () => {
     const input = {
-      taskId,
       creatorId,
       userIds,
       homeId,
