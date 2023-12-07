@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import {
-  View, Text, ScrollView, KeyboardAvoidingView,
+  View, Text, ScrollView, KeyboardAvoidingView, Alert,
 } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import { registerUser } from '../../../utils/api/authApi';
@@ -30,11 +30,17 @@ function RegisterScreen({ navigation }) {
       lastName,
     };
 
-    const user = await registerUser(input);
-    console.log('REGISTER INPUT', user);
+    try {
+      const user = await registerUser(input);
+      console.log('REGISTER INPUT', user);
 
-    // TODO: Save Credentials to Context
-    navigation.navigate('Dashboard');
+      // TODO: Save Credentials to Context
+      navigation.navigate('Dashboard');
+    } catch ({ message }) {
+      Alert.alert('Registration Failed', message, [
+        { text: 'OK' },
+      ]);
+    }
   };
 
   return (
@@ -98,7 +104,7 @@ function RegisterScreen({ navigation }) {
             value={lastName}
             onChangeText={setLastName}
           />
-          <Button mode="contained" onPress={handleSubmit}>Login</Button>
+          <Button mode="contained" onPress={handleSubmit}>Submit</Button>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

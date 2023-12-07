@@ -1,3 +1,4 @@
+import ApiTestScreen from './ApiTestScreen/ApiTestScreen';
 import AssignTaskScreen from './AssignTask/AssignTaskScreen';
 import CreateHomeScreen from './CreateHome/CreateHomeScreen';
 import CreateTaskScreen from './CreateTask/CreateTaskScreen';
@@ -24,4 +25,5 @@ export default [
   { name: 'CreateTask', component: CreateTaskScreen },
   { name: 'AssignTask', component: AssignTaskScreen },
   { name: 'Profile', component: ProfileScreen },
+  { name: 'APITest', component: ApiTestScreen },
 ];

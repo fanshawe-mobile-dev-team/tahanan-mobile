@@ -39,24 +39,39 @@ const styles = StyleSheet.create({
     color: colors.primary.main,
     fontWeight: 'bold',
   },
+  errorContainer: {
+    padding: 16,
+    opacity: 0,
+  },
+  errorMessage: {
+    color: colors.error.main,
+    textAlign: 'center',
+  },
 });
 
-function LoginScreen() {
+function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('test@email.com');
   const [password, setPassword] = useState('password');
+  const [showError, setShowError] = useState(false);
 
   const passwordRef = useRef();
 
   const handleSubmit = async () => {
+    setShowError(false);
     if (!email || !password) {
-      console.log('Invalid');
       return;
     }
 
-    const user = await loginUser(email, password);
+    try {
+      const user = await loginUser(email, password);
+      console.log('SIGN IN', user);
 
-    console.log('SIGN IN', user);
-    // TODO: Navigate to Dashboard
+      // TODO: Save user data
+      navigation.navigate('Dashboard');
+    } catch (error) {
+      console.log(error);
+      setShowError(true);
+    }
   };
 
   return (
@@ -67,6 +82,9 @@ function LoginScreen() {
         </View>
         <View style={styles.form}>
           <Text style={styles.title}>Login</Text>
+          <View style={[styles.errorContainer, { opacity: showError ? 1 : 0 }]}>
+            <Text style={styles.errorMessage}>You have entered invalid credentials.</Text>
+          </View>
           <TextInput
             style={styles.input}
             label="Email"
