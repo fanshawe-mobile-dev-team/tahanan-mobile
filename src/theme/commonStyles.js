@@ -1,6 +1,9 @@
 import { StyleSheet } from 'react-native';
 
 const commonStyles = StyleSheet.create({
+  keybardAvoiding: {
+    flex: 1,
+  },
   screenContainer: {
     paddingHorizontal: 16,
     paddingVertical: 32,
