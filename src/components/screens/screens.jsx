@@ -15,7 +15,7 @@ export default [
   { name: 'Login', component: LoginScreen, options: { headerShown: false } },
   { name: 'Register', component: RegisterScreen },
   { name: 'PostRegister', component: PostRegisterScreen, options: { headerShown: false } },
-  { name: 'CreateHome', component: CreateHomeScreen },
+  { name: 'CreateHome', component: CreateHomeScreen, options: { title: 'Create a New Home' } },
   { name: 'SearchHome', component: SearchHomeScreen },
   { name: 'JoinHome', component: JoinHomeScreen },
   { name: 'Dashboard', component: DashboardScreen, options: { headerShown: false } },
