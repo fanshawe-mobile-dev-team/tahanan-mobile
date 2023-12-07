@@ -4,7 +4,7 @@
   "workbench.sideBar.location": "right",
   "eslint.format.enable": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
   "[css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
