@@ -8,34 +8,36 @@ function ApiTestScreen() {
   const testApi = async () => {
     // ownerId, name, addressLine1, addressLine2, city, state, postalCode, description
 
-    // const input = {
-    //   ownerId: '1',
-    //   name: 'home1',
-    //   addressLine1: 'asd',
-    //   addressLine2: 'dsa',
-    //   city: '1dsa',
-    //   state: 'canada',
-    //   postalCode: '123 321',
-    //   description: 'asd',
-    // };
+    const input = {
+      ownerId: '1',
+      name: 'home1',
+      addressLine1: 'asd',
+      addressLine2: 'dsa',
+      city: '1dsa',
+      state: 'canada',
+      postalCode: '123 321',
+      description: 'asd',
+    };
 
-    // const res = createHome(input);
+    const res = createHome(input);
+
+    console.log(res);
 
     // const res = await fetchHome('ejt4W18HpPI2EKeMUTVX');
 
-    const updateInput = {
-      id: 'ejt4W18HpPI2EKeMUTVX',
-      name: 'home1',
-      addressLine1: 'updated',
-      addressLine2: 'updated',
-      city: 'updated',
-      state: 'updated',
-      postalCode: 'updated',
-      description: 'updated',
-    };
+    // const updateInput = {
+    //   id: 'ejt4W18HpPI2EKeMUTVX',
+    //   name: 'home1',
+    //   addressLine1: 'updated',
+    //   addressLine2: 'updated',
+    //   city: 'updated',
+    //   state: 'updated',
+    //   postalCode: 'updated',
+    //   description: 'updated',
+    // };
 
-    const res = await updateHome(updateInput);
-    console.log('API TEST RESULT', res);
+    // const res = await updateHome(updateInput);
+    // console.log('API TEST RESULT', res);
   };
 
   return (
