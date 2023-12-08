@@ -1,11 +1,11 @@
 {
-   "files.eol": "\n",
+  "files.eol": "\n",
   "liveServer.settings.donotVerifyTags": true,
   "liveServer.settings.donotShowInfoMsg": true,
   "workbench.sideBar.location": "right",
   "eslint.format.enable": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": true
   },
   "[css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -28,5 +28,5 @@
       "siteId": "4768b9f3-24f0-4452-b4f4-4e206b1018d7",
       "monitor": true
     }
-  ],
+  ]
 }

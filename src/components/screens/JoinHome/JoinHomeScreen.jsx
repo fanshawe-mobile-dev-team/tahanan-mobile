@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TouchableOpacity, View,
+  Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View,
 } from 'react-native';
 import { Button } from 'react-native-paper';
 import commonStyles from '../../../theme/commonStyles';

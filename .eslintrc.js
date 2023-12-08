@@ -24,5 +24,7 @@ module.exports = {
   rules: {
     'react/prop-types': 'off',
     'linebreak-style': 0,
+    'react/no-unstable-nested-components': 'off',
+    'react/jsx-props-no-spreading': 'off',
   },
 };

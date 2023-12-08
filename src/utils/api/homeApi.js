@@ -27,6 +27,8 @@ export const createHome = async (input) => {
 };
 
 export const fetchHome = async (id) => {
+  if (!id) return null;
+
   const homeRef = doc(db, 'homes', id);
   const home = await getDoc(homeRef);
 
@@ -58,19 +60,4 @@ export const updateHome = async (input) => {
   } catch ({ message }) {
     throw new Error(message);
   }
-};
-
-export const invteUserToHome = async (input) => {
-  // SAMPLE INPUT
-  // {
-  //   homeId: 'home1',
-  //   senderId: 'jdoe',
-  //   recipientId: 'user1'
-  // }
-
-  const { homeId, recipientId } = input;
-
-  const homeRef = await addDoc(collection(db, 'homeInvites', `${homeId}-${recipientId}`), input);
-
-  console.log(homeRef);
 };

@@ -1,7 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import {
   Text,
-  StyleSheet,
   View,
 } from 'react-native';
 import {
@@ -12,33 +11,17 @@ import {
 // import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import commonStyles from '../../../theme/commonStyles';
 import Container from '../../common/Container';
+import { useProfile } from '../../hoc/ProfileContext';
 
-const BOTTOM_APPBAR_HEIGHT = 80;
-const MEDIUM_FAB_HEIGHT = 56;
+// const BOTTOM_APPBAR_HEIGHT = 80;
+// const MEDIUM_FAB_HEIGHT = 56;
 
 const DEFAULT_AVATAR_IMAGE = require('../../../../assets/placeholder-avatar.png');
 
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 16,
-    paddingVertical: 32,
-    flex: 1,
-  },
-  input: {
-    marginBottom: 20,
-  },
-  heading: {
-    fontWeight: 'bold',
-    marginBottom: 10,
-    fontSize: 24,
-  },
-  subheading: {
-    marginBottom: 28,
-  },
-});
-
 // TODO:Set username in hello and number of tasks
 function DashboardScreen() {
+  const { profile } = useProfile();
+
   const currentDate = new Date();
   const formattedDate = currentDate.toDateString();
 
@@ -53,7 +36,7 @@ function DashboardScreen() {
         <View style={{ flexDirection: 'row' }}>
           <Avatar.Image size={80} source={DEFAULT_AVATAR_IMAGE} />
           <View style={{ marginTop: 12 }}>
-            <Text style={commonStyles.commonTitle}>Hello, Test User!</Text>
+            <Text style={commonStyles.commonTitle}>{`Hello, ${profile.username}!`}</Text>
             <Text style={commonStyles.commonSubTitle}>You have 12 Tasks today</Text>
           </View>
         </View>
