@@ -17,13 +17,20 @@ export function ProfileProvider({ children }) {
     return user;
   };
 
+  const setHome = (newHome) => {
+    setProfile({
+      ...profile,
+      home: newHome,
+    });
+  };
+
   const logout = () => {
     // Perform the logout logic and update the profile state
     setProfile(null);
   };
 
   const state = useMemo(() => ({
-    profile, login, logout,
+    profile, login, logout, setHome,
   }), [profile]);
 
   return (

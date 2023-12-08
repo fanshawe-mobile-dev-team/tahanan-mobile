@@ -1,12 +1,15 @@
 /* eslint-disable max-len */
 import React, { useState } from 'react';
 import {
+  Alert,
   StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import commonStyles from '../../../theme/commonStyles';
 import Container from '../../common/Container';
 import colors from '../../../theme/colors';
+import { createHome } from '../../../utils/api/homeApi';
+import { useProfile } from '../../hoc/ProfileContext';
 
 const styles = StyleSheet.create({
   footer: {
@@ -21,12 +24,33 @@ const styles = StyleSheet.create({
 });
 
 function CreateHomeScreen({ navigation }) {
-  const [name, setName] = useState('');
-  const [addressLine1, setAddressLine1] = useState('');
-  const [addressLine2, setAddressLine2] = useState('');
-  const [city, setCity] = useState('');
-  const [province, setProvince] = useState('');
-  const [postalCode, setPostalCode] = useState('');
+  const { profile, setHome } = useProfile();
+  const [name, setName] = useState('home1');
+  const [addressLine1, setAddressLine1] = useState('line1');
+  const [addressLine2, setAddressLine2] = useState('line2');
+  const [city, setCity] = useState('city');
+  const [province, setProvince] = useState('province');
+  const [postalCode, setPostalCode] = useState('12345');
+
+  const handleSubmit = async () => {
+    try {
+      const input = {
+        ownerId: profile.username,
+        name,
+        addressLine1,
+        addressLine2,
+        city,
+        province,
+        postalCode,
+      };
+
+      const newHome = await createHome(input);
+      setHome(newHome);
+      navigation.navigate('Dashboard');
+    } catch (error) {
+      Alert.alert('Unsuccessful', error.message);
+    }
+  };
 
   return (
     <Container>
@@ -82,7 +106,7 @@ function CreateHomeScreen({ navigation }) {
           value={postalCode}
           onChangeText={setPostalCode}
         />
-        <Button mode="contained">Register Home</Button>
+        <Button mode="contained" onPress={handleSubmit}>Register Home</Button>
       </View>
       <View style={styles.footer}>
         <Text>Home already exists? </Text>

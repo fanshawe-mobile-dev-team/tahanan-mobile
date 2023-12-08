@@ -1,10 +1,10 @@
 import {
-  addDoc, collection, doc, getDoc, setDoc,
+  doc, getDoc, setDoc,
 } from 'firebase/firestore';
 import { db } from './firebaseConfig';
 
 export const createHome = async (input) => {
-  const { name } = input;
+  const { name, ownerId } = input;
   // SAMPLE INPUT
   //  {
   //   ownerId: '1',
@@ -18,9 +18,19 @@ export const createHome = async (input) => {
   // }
 
   try {
-    const homeRef = await addDoc(collection(db, 'homes', name), input);
+    // Check for existing username and email
+    const homeRef = doc(db, 'homes', name);
+    const homeSnapshot = await getDoc(homeRef);
+    if (homeSnapshot.exists()) {
+      throw new Error('Home name already already taken');
+    }
 
-    return homeRef.id;
+    await setDoc(doc(db, 'homes', name), input);
+    await setDoc(doc(db, 'users', ownerId), { homeId: name }, { merge: true });
+
+    const newHome = (await getDoc(homeRef)).data();
+
+    return newHome;
   } catch ({ message }) {
     throw new Error(message);
   }
@@ -30,6 +40,7 @@ export const fetchHome = async (id) => {
   if (!id) return null;
 
   const homeRef = doc(db, 'homes', id);
+
   const home = await getDoc(homeRef);
 
   return home.data();
