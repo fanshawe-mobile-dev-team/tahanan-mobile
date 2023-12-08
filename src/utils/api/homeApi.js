@@ -27,6 +27,8 @@ export const createHome = async (input) => {
 };
 
 export const fetchHome = async (id) => {
+  if (!id) return null;
+
   const homeRef = doc(db, 'homes', id);
   const home = await getDoc(homeRef);
 

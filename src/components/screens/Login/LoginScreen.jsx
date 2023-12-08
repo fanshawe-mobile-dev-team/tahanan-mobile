@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import colors from '../../../theme/colors';
-import { useProfile } from '../../hoc/UserContext';
+import { useProfile } from '../../hoc/ProfileContext';
 
 const styles = StyleSheet.create({
   container: {

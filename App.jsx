@@ -5,7 +5,7 @@ import SelectDropdown from 'react-native-select-dropdown';
 import React, { useRef } from 'react';
 import screens from './src/components/screens/screens';
 import defaultTheme from './src/theme/defaultTheme';
-import { ProfileProvider } from './src/components/hoc/UserContext';
+import { ProfileProvider } from './src/components/hoc/ProfileContext';
 
 const Stack = createNativeStackNavigator();
 
