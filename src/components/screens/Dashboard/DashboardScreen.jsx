@@ -1,23 +1,20 @@
-import React, { useRef, useState } from "react";
+import React, { } from 'react';
 import {
   Text,
   StyleSheet,
   ScrollView,
-  View,
   KeyboardAvoidingView,
-} from "react-native";
+} from 'react-native';
 import {
-  Button,
-  TextInput,
   List,
   MD3Colors,
-  Icon,
   Card,
-} from "react-native-paper";
-//import { useSafeAreaInsets } from 'react-native-safe-area-context';
+} from 'react-native-paper';
+import { useProfile } from '../../hoc/UserContext';
+// import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const BOTTOM_APPBAR_HEIGHT = 80;
-const MEDIUM_FAB_HEIGHT = 56;
+// const BOTTOM_APPBAR_HEIGHT = 80;
+// const MEDIUM_FAB_HEIGHT = 56;
 
 const styles = StyleSheet.create({
   container: {
@@ -29,7 +26,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   heading: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 10,
     fontSize: 24,
   },
@@ -38,13 +35,15 @@ const styles = StyleSheet.create({
   },
 });
 
-function DashboardScreen() {
+function DashboardScreen({ navigation }) {
+  const { profile } = useProfile();
+
   return (
     <KeyboardAvoidingView style={[styles.container]}>
       <ScrollView>
         <Card>
           <Card.Content>
-            <Text variant="titleLarge">Hello, Test User!</Text>
+            <Text variant="titleLarge">{`Hello, ${profile.username}!`}</Text>
             <Text variant="bodyMedium">You have 12 Tasks today</Text>
           </Card.Content>
         </Card>

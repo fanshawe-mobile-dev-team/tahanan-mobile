@@ -5,8 +5,10 @@ import {
 import { Button, TextInput } from 'react-native-paper';
 import { registerUser } from '../../../utils/api/authApi';
 import commonStyles from '../../../theme/commonStyles';
+import { useProfile } from '../../hoc/UserContext';
 
 function RegisterScreen({ navigation }) {
+  const { login } = useProfile();
   const [email, setEmail] = useState('test@email.com');
   const [password, setPassword] = useState('password');
   const [phone, setPhone] = useState('1234567890');
@@ -31,10 +33,10 @@ function RegisterScreen({ navigation }) {
     };
 
     try {
-      const user = await registerUser(input);
-      console.log('REGISTER INPUT', user);
+      await registerUser(input);
 
-      // TODO: Save Credentials to Context
+      await login({ email, password });
+
       navigation.navigate('Dashboard');
     } catch ({ message }) {
       Alert.alert('Registration Failed', message, [

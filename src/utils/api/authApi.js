@@ -3,15 +3,26 @@ import {
   signInWithEmailAndPassword,
 } from 'firebase/auth';
 import {
-  doc, getDoc, setDoc,
+  collection,
+  doc, getDoc, getDocs, query, setDoc, where,
 } from 'firebase/firestore';
 import { auth, db } from './firebaseConfig';
 
-export const loginUser = async (email, password) => {
+const usersCollection = collection(db, 'users');
+
+export const loginUser = async (input) => {
+  const { email, password } = input;
+
   try {
     const { user } = await signInWithEmailAndPassword(auth, email, password);
 
-    return user;
+    const q = query(usersCollection, where('email', '==', user.email));
+
+    const querySnapshot = await getDocs(q);
+
+    const userData = querySnapshot.docs[0].data();
+
+    return userData;
   } catch ({ code, message }) {
     console.log({ code, message });
     throw new Error('You have entered invalid credentials.');
@@ -46,12 +57,9 @@ export const registerUser = async (input) => {
         email,
         phone,
         subId: newUser.uid,
+        username,
       });
     }
-
-    const user = await loginUser(email, password);
-
-    return user;
   } catch ({ code, message }) {
     let messageOutput;
 

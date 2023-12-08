@@ -10,7 +10,6 @@ import colors from '../../../theme/colors';
 
 const styles = StyleSheet.create({
   list: {
-    marginBottom: 48,
   },
   homeRequest: {
     borderColor: colors.outline.main,

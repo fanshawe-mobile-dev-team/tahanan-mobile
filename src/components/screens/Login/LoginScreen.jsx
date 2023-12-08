@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import colors from '../../../theme/colors';
-import { loginUser } from '../../../utils/api/authApi';
+import { useProfile } from '../../hoc/UserContext';
 
 const styles = StyleSheet.create({
   container: {
@@ -50,6 +50,8 @@ const styles = StyleSheet.create({
 });
 
 function LoginScreen({ navigation }) {
+  const { login } = useProfile();
+
   const [email, setEmail] = useState('test@email.com');
   const [password, setPassword] = useState('password');
   const [showError, setShowError] = useState(false);
@@ -63,11 +65,14 @@ function LoginScreen({ navigation }) {
     }
 
     try {
-      const user = await loginUser(email, password);
-      console.log('SIGN IN', user);
+      const user = await login({ email, password });
 
       // TODO: Save user data
-      navigation.navigate('Dashboard');
+      if (user.homeId) {
+        navigation.navigate('Dashboard');
+      } else {
+        navigation.navigate('PostRegister');
+      }
     } catch (error) {
       console.log(error);
       setShowError(true);

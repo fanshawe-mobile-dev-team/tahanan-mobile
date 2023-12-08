@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  ScrollView, StyleSheet, Text, View,
+  StyleSheet, Text, View,
 } from 'react-native';
 import { Button } from 'react-native-paper';
 import commonStyles from '../../../theme/commonStyles';
 import colors from '../../../theme/colors';
-import HomeInvites from './HomeInvites';
 import HomeRequests from './HomeRequests';
+import Container from '../../common/Container';
 
 const styles = StyleSheet.create({
   actions: {
@@ -21,9 +21,9 @@ const styles = StyleSheet.create({
   },
 });
 
-function PostRegisterScreen() {
+function PostRegisterScreen({ navigation }) {
   return (
-    <ScrollView style={commonStyles.screenContainer}>
+    <Container>
       <Text style={commonStyles.displayHeading}>
         You don’t belong to a home yet
       </Text>
@@ -34,11 +34,10 @@ function PostRegisterScreen() {
       <View style={styles.actions}>
         <Button mode="contained">Join an Existing Home</Button>
         <Text style={styles.actionSeparator}>or</Text>
-        <Button mode="contained">Create a New Home</Button>
+        <Button mode="contained" onPress={() => navigation.navigate('CreateHome')}>Create a New Home</Button>
       </View>
-      <HomeInvites />
       <HomeRequests />
-    </ScrollView>
+    </Container>
   );
 }
 
