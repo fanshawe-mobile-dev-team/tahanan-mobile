@@ -66,6 +66,13 @@ const commonStyles = StyleSheet.create({
     fontSize: 22,
     color: colors.primary.main,
   },
+  dashbDate2: {
+    fontWeight: 'bold',
+    marginVertical: 12,
+    textAlign: 'center',
+    fontSize: 22,
+    color: colors.primary.main,
+    marginHorizontal: 16,
   errorContainer: {
     minHeight: 20,
     marginBottom: 10,

@@ -1,23 +1,21 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Text,
-  StyleSheet,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {
   List,
   Surface,
-  Button,
-  IconButton,
-  MD3Colors,
+  Icon,
 } from 'react-native-paper';
-// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DatePickerModal } from 'react-native-paper-dates';
 import commonStyles from '../../../theme/commonStyles';
 import Container from '../../common/Container';
+import colors from '../../../theme/colors';
 
-const BOTTOM_APPBAR_HEIGHT = 80;
-const MEDIUM_FAB_HEIGHT = 56;
+// const BOTTOM_APPBAR_HEIGHT = 80;
+// const MEDIUM_FAB_HEIGHT = 56;
 
 function TaskListScreen() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -44,16 +42,18 @@ function TaskListScreen() {
 
   return (
     <Container>
-      <Surface style={commonStyles.commonSurface} elevation={4}>
-        <View style={{ flexDirection: 'row' }}>
-          <Text style={commonStyles.dashbDate}>{formattedDate}</Text>
-          <View>
-            <IconButton
-              icon="calendar"
-              iconColor={MD3Colors.primary100}
-              size={20}
-              onPress={() => setOpen(true)}
-            />
+      <TouchableOpacity onPress={() => setOpen(true)}>
+        <Surface style={commonStyles.commonSurface} elevation={4}>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={commonStyles.dashbDate2}>
+              {formattedDate}
+              <Icon
+                source="calendar"
+                color={colors.primary.main}
+                size={30}
+              />
+            </Text>
+
             <DatePickerModal
               locale="en"
               mode="single"
@@ -63,8 +63,9 @@ function TaskListScreen() {
               onConfirm={onConfirmSingle}
             />
           </View>
-        </View>
-      </Surface>
+        </Surface>
+      </TouchableOpacity>
+
       <List.Section style={{ marginTop: 24 }}>
         <Text style={commonStyles.displayHeading}>Tasks</Text>
 
