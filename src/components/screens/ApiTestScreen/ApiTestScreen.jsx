@@ -1,27 +1,30 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { Button } from 'react-native-paper';
-import { createHome, fetchHome, updateHome } from '../../../utils/api/homeApi';
+import {
+  acceptHomeRequest,
+  createHome, fetchHome, sendHomeRequest, updateHome,
+} from '../../../utils/api/homeApi';
 import commonStyles from '../../../theme/commonStyles';
 
 function ApiTestScreen() {
   const testApi = async () => {
     // ownerId, name, addressLine1, addressLine2, city, state, postalCode, description
 
-    const input = {
-      ownerId: '1',
-      name: 'home1',
-      addressLine1: 'asd',
-      addressLine2: 'dsa',
-      city: '1dsa',
-      state: 'canada',
-      postalCode: '123 321',
-      description: 'asd',
-    };
+    // const input = {
+    //   ownerId: '1',
+    //   name: 'home1',
+    //   addressLine1: 'asd',
+    //   addressLine2: 'dsa',
+    //   city: '1dsa',
+    //   state: 'canada',
+    //   postalCode: '123 321',
+    //   description: 'asd',
+    // };
 
-    const res = createHome(input);
+    // const res = createHome(input);
 
-    console.log(res);
+    // console.log(res);
 
     // const res = await fetchHome('ejt4W18HpPI2EKeMUTVX');
 
@@ -38,6 +41,17 @@ function ApiTestScreen() {
 
     // const res = await updateHome(updateInput);
     // console.log('API TEST RESULT', res);
+
+    // const input = {
+    //   userId: 'testUser2',
+    //   homeId: 'home1',
+    //   ownerId: 'testUser',
+    // };
+
+    // const res = await sendHomeRequest(input);
+    // console.log('TEST RES', res);
+
+    await acceptHomeRequest('home1-testUser2');
   };
 
   return (
