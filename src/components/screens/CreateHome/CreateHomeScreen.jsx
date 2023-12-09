@@ -26,22 +26,14 @@ const styles = StyleSheet.create({
 function CreateHomeScreen({ navigation }) {
   const { profile, setHome } = useProfile();
   const [name, setName] = useState('home1');
-  const [addressLine1, setAddressLine1] = useState('line1');
-  const [addressLine2, setAddressLine2] = useState('line2');
-  const [city, setCity] = useState('city');
-  const [province, setProvince] = useState('province');
-  const [postalCode, setPostalCode] = useState('12345');
+  const [description, setDescription] = useState('This is an awesome home!');
 
   const handleSubmit = async () => {
     try {
       const input = {
         ownerId: profile.username,
         name,
-        addressLine1,
-        addressLine2,
-        city,
-        province,
-        postalCode,
+        description,
       };
 
       const newHome = await createHome(input);
@@ -69,42 +61,12 @@ function CreateHomeScreen({ navigation }) {
         <TextInput
           // ref={addressLine1Ref}
           style={commonStyles.commonInput}
-          label="Address Line 1"
-          placeholder="Enter a address line 1"
-          value={addressLine1}
-          onChangeText={setAddressLine1}
-        />
-        <TextInput
-          // ref={addressLine1Ref}
-          style={commonStyles.commonInput}
-          label="Address Line 2"
-          placeholder="Enter a address line 2"
-          value={addressLine2}
-          onChangeText={setAddressLine2}
-        />
-        <TextInput
-          // ref={addressLine1Ref}
-          style={commonStyles.commonInput}
-          label="City"
-          placeholder="Enter a city"
-          value={city}
-          onChangeText={setCity}
-        />
-        <TextInput
-          // ref={addressLine1Ref}
-          style={commonStyles.commonInput}
-          label="Province"
-          placeholder="Enter province"
-          value={province}
-          onChangeText={setProvince}
-        />
-        <TextInput
-          // ref={addressLine1Ref}
-          style={commonStyles.commonInput}
-          label="Postal Code"
-          placeholder="Enter postal code"
-          value={postalCode}
-          onChangeText={setPostalCode}
+          label="Description"
+          placeholder="Enter description"
+          value={description}
+          multiline
+          numberOfLines={6}
+          onChangeText={setDescription}
         />
         <Button mode="contained" onPress={handleSubmit}>Register Home</Button>
       </View>

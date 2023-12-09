@@ -32,7 +32,7 @@ function PostRegisterScreen({ navigation }) {
         experience a seamless way to manage your household tasks.
       </Text>
       <View style={styles.actions}>
-        <Button mode="contained">Join an Existing Home</Button>
+        <Button mode="contained" onPress={() => navigation.navigate('SearchHome')}>Join an Existing Home</Button>
         <Text style={styles.actionSeparator}>or</Text>
         <Button mode="contained" onPress={() => navigation.navigate('CreateHome')}>Create a New Home</Button>
       </View>

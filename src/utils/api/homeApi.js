@@ -1,8 +1,11 @@
 import {
+  collection,
   deleteDoc,
-  doc, getDoc, setDoc,
+  doc, getDoc, getDocs, query, setDoc, where,
 } from 'firebase/firestore';
 import { db } from './firebaseConfig';
+
+const homeRequestsCollection = collection(db, 'homeRequests');
 
 export const createHome = async (input) => {
   const { name, ownerId } = input;
@@ -26,7 +29,7 @@ export const createHome = async (input) => {
       throw new Error('Home name already already taken');
     }
 
-    await setDoc(doc(db, 'homes', name), input);
+    await setDoc(doc(db, 'homes', name), { ...input, users: [ownerId] });
     await setDoc(doc(db, 'users', ownerId), { homeId: name }, { merge: true });
 
     const newHome = (await getDoc(homeRef)).data();
@@ -79,8 +82,9 @@ export const sendHomeRequest = async (input) => {
   // const input = {
   //   userId: 'user1',
   //   homeId: 'home1',
-  //   ownerId: 'user2'
+  //   ownerId: 'owner'
   // };
+
   const { userId, homeId } = input;
 
   try {
@@ -117,6 +121,19 @@ export const acceptHomeRequest = async (homeRequestId) => {
     await setDoc(doc(db, 'users', homeRequest.userId), { homeId: homeRequest.homeId }, { merge: true });
 
     await deleteDoc(homeRequestRef);
+  } catch ({ message }) {
+    throw new Error(message);
+  }
+};
+
+export const fetchHomeRequests = async (homeId) => {
+  try {
+    const requestsQry = query(homeRequestsCollection, where('homeId', '==', homeId));
+    const requestsSnapshots = await getDocs(requestsQry);
+
+    const requests = requestsSnapshots.docs.map((request) => request.data());
+
+    return requests;
   } catch ({ message }) {
     throw new Error(message);
   }

@@ -1,9 +1,12 @@
 import React from 'react';
 import {
+  Alert,
   Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View,
 } from 'react-native';
 import { Button } from 'react-native-paper';
 import commonStyles from '../../../theme/commonStyles';
+import { sendHomeRequest } from '../../../utils/api/homeApi';
+import { useProfile } from '../../hoc/ProfileContext';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +25,31 @@ const styles = StyleSheet.create({
   },
 });
 
-function JoinHomeScreen() {
+function JoinHomeScreen({ navigation, route }) {
+  const {
+    home: {
+      name,
+      ownerId,
+      description,
+    },
+  } = route.params;
+  const { profile: { username } } = useProfile();
+
+  const handleJoin = async () => {
+    try {
+      const input = {
+        userId: username,
+        homeId: name,
+        ownerId,
+      };
+
+      await sendHomeRequest(input);
+      navigation.navigate('PostRegister');
+    } catch ({ message }) {
+      Alert.alert('Request Failed', message);
+    }
+  };
+
   return (
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView>
@@ -30,17 +57,16 @@ function JoinHomeScreen() {
           <Image source={{ uri: 'https://picsum.photos/600' }} style={styles.image} />
         </View>
         <Text style={commonStyles.displayHeading}>
-          Home 1
+          {name}
         </Text>
         <Text style={commonStyles.displaySubheading}>
-          by homeowner 123
+          {`by ${ownerId}`}
         </Text>
         <Text style={commonStyles.displaySubheading}>
-          Register to a home to unlock the full potential of Tahanan and
-          experience a seamless way to manage your household tasks.
+          {description}
         </Text>
         <View style={styles.actions}>
-          <Button mode="contained">Join this Home</Button>
+          <Button mode="contained" onPress={handleJoin}>Join this Home</Button>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
