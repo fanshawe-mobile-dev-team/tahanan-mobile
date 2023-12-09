@@ -38,7 +38,7 @@ function CreateHomeScreen({ navigation }) {
 
       const newHome = await createHome(input);
       setHome(newHome);
-      navigation.navigate('Dashboard');
+      navigation.navigate('Main');
     } catch (error) {
       Alert.alert('Unsuccessful', error.message);
     }

@@ -72,7 +72,7 @@ function HomeProfileScreen() {
       <Text style={styles.subHeading}>
         Home Members:
       </Text>
-      {profile.home.users?.map((user) => <Text>{user}</Text>)}
+      {profile.home.users?.map((user) => <Text key={user}>{user}</Text>)}
       {isOwner && homeRequest
       && (
       <>
@@ -80,7 +80,7 @@ function HomeProfileScreen() {
         <Text style={styles.subHeading}>
           Home Member Requests:
         </Text>
-        {homeRequestUsers?.map((user) => <Text>{user}</Text>)}
+        {homeRequestUsers?.map((user) => <Text key={user}>{user}</Text>)}
       </>
       )}
       <View />

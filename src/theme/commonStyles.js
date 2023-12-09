@@ -22,7 +22,6 @@ const commonStyles = StyleSheet.create({
     marginBottom: 20,
   },
   greyButton: {
-    buttonColor: '#777680',
     backgroundColor: '#777680',
     marginVertical: 12,
   },
@@ -73,10 +72,10 @@ const commonStyles = StyleSheet.create({
     fontSize: 22,
     color: colors.primary.main,
     marginHorizontal: 16,
-    errorContainer: {
-      minHeight: 20,
-      marginBottom: 10,
-    },
+  },
+  errorContainer: {
+    minHeight: 20,
+    marginBottom: 10,
   },
   formError: {
     color: colors.error.main,

@@ -70,7 +70,7 @@ function LoginScreen({ navigation }) {
       const homeRequest = await fetchUserRequest(user.username);
 
       if (user.homeId) {
-        navigation.navigate('Dashboard');
+        navigation.navigate('Main');
       } else if (homeRequest) {
         const home = await fetchHome(homeRequest.homeId);
         navigation.navigate('JoinHome', { home, hasActiveRequest: true });
