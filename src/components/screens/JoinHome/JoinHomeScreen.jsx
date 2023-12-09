@@ -16,11 +16,6 @@ const styles = StyleSheet.create({
     aspectRatio: 3 / 2,
     borderRadius: 24,
   },
-  actions: {
-    paddingVertical: 48,
-    borderBottomWidth: 1,
-    marginBottom: 32,
-  },
   actionSeparator: {
     marginVertical: 12,
     textAlign: 'center',

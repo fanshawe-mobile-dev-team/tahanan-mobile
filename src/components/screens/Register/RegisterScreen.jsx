@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import {
-  View, Text, ScrollView, KeyboardAvoidingView, Alert,
+  View, Text, Alert,
 } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import { registerUser } from '../../../utils/api/authApi';
@@ -38,7 +38,7 @@ function RegisterScreen({ navigation }) {
 
       await login({ email, password });
 
-      navigation.navigate('Dashboard');
+      navigation.navigate('PostRegister');
     } catch ({ message }) {
       Alert.alert('Registration Failed', message, [
         { text: 'OK' },

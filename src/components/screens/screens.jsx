@@ -18,7 +18,7 @@ export default [
   { name: 'PostRegister', component: PostRegisterScreen, options: { headerShown: false } },
   { name: 'CreateHome', component: CreateHomeScreen, options: { title: 'Create a New Home' } },
   { name: 'SearchHome', component: SearchHomeScreen },
-  { name: 'JoinHome', component: JoinHomeScreen, options: { title: 'Search for a Home' } },
+  { name: 'JoinHome', component: JoinHomeScreen, options: { title: 'Join Home' } },
   { name: 'Dashboard', component: DashboardScreen, options: { headerShown: false } },
   { name: 'TaskList', component: TaskListScreen },
   { name: 'Task', component: TaskScreen, options: { title: 'Sweep Floor' } },

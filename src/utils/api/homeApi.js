@@ -1,4 +1,5 @@
 import {
+  deleteDoc,
   doc, getDoc, setDoc,
 } from 'firebase/firestore';
 import { db } from './firebaseConfig';
@@ -68,6 +69,54 @@ export const updateHome = async (input) => {
     const home = await getDoc(homeRef);
 
     return home.data();
+  } catch ({ message }) {
+    throw new Error(message);
+  }
+};
+
+export const sendHomeRequest = async (input) => {
+  // Sample Input
+  // const input = {
+  //   userId: 'user1',
+  //   homeId: 'home1',
+  //   ownerId: 'user2'
+  // };
+  const { userId, homeId } = input;
+
+  try {
+    // Check for existing username and email
+    const homeRequestId = `${homeId}-${userId}`;
+
+    const homeRequestRef = doc(db, 'homeRequests', homeRequestId);
+    const homeRequestSnapshot = await getDoc(homeRequestRef);
+    if (homeRequestSnapshot.exists()) {
+      throw new Error('You already have a request for this home.');
+    }
+
+    await setDoc(doc(db, 'homeRequests', homeRequestId), input);
+
+    const newHomeRequest = (await getDoc(homeRequestRef)).data();
+
+    return newHomeRequest;
+  } catch ({ message }) {
+    throw new Error(message);
+  }
+};
+
+export const acceptHomeRequest = async (homeRequestId) => {
+  try {
+    const homeRequestRef = doc(db, 'homeRequests', homeRequestId);
+    const homeRequestSnapshot = await getDoc(homeRequestRef);
+
+    if (!homeRequestSnapshot.exists()) {
+      throw new Error('Home request does not exist');
+    }
+
+    const homeRequest = homeRequestSnapshot.data();
+
+    await setDoc(doc(db, 'users', homeRequest.userId), { homeId: homeRequest.homeId }, { merge: true });
+
+    await deleteDoc(homeRequestRef);
   } catch ({ message }) {
     throw new Error(message);
   }

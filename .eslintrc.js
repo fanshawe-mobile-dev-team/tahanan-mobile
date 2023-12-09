@@ -26,5 +26,6 @@ module.exports = {
     'linebreak-style': 0,
     'react/no-unstable-nested-components': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'no-console': 'off',
   },
 };
