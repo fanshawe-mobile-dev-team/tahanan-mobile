@@ -3,6 +3,7 @@ import AssignTaskScreen from './AssignTask/AssignTaskScreen';
 import CreateHomeScreen from './CreateHome/CreateHomeScreen';
 import CreateTaskScreen from './CreateTask/CreateTaskScreen';
 import DashboardScreen from './Dashboard/DashboardScreen';
+import HomeProfileScreen from './HomeProfile/HomeProfileScreen';
 import JoinHomeScreen from './JoinHome/JoinHomeScreen';
 import LoginScreen from './Login/LoginScreen';
 import PostRegisterScreen from './PostRegister/PostRegisterScreen';
@@ -26,4 +27,5 @@ export default [
   { name: 'AssignTask', component: AssignTaskScreen },
   { name: 'Profile', component: ProfileScreen },
   { name: 'APITest', component: ApiTestScreen },
+  { name: 'HomeProfile', component: HomeProfileScreen, options: { title: 'Home Profile' } },
 ];
