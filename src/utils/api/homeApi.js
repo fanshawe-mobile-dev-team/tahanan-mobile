@@ -138,3 +138,27 @@ export const fetchHomeRequests = async (homeId) => {
     throw new Error(message);
   }
 };
+
+export const fetchUserRequest = async (userId) => {
+  try {
+    const requestsQry = query(homeRequestsCollection, where('userId', '==', userId));
+    const requestsSnapshots = await getDocs(requestsQry);
+
+    const request = requestsSnapshots.docs[0].data();
+    request.id = requestsSnapshots.docs[0].id;
+
+    return request;
+  } catch ({ message }) {
+    throw new Error(message);
+  }
+};
+
+export const cancelHomeRequest = async (homeRequestId) => {
+  try {
+    const homeRequestRef = doc(db, 'homeRequests', homeRequestId);
+
+    await deleteDoc(homeRequestRef);
+  } catch ({ message }) {
+    throw new Error(message);
+  }
+};

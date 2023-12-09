@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet, Text, View,
 } from 'react-native';
 import { Button } from 'react-native-paper';
 import commonStyles from '../../../theme/commonStyles';
 import colors from '../../../theme/colors';
-import HomeRequests from './HomeRequests';
 import Container from '../../common/Container';
+import { fetchUserRequests } from '../../../utils/api/homeApi';
+import { useProfile } from '../../hoc/ProfileContext';
 
 const styles = StyleSheet.create({
   actions: {
@@ -22,6 +23,22 @@ const styles = StyleSheet.create({
 });
 
 function PostRegisterScreen({ navigation }) {
+  const { profile } = useProfile();
+
+  const [homeRequests, setHomeRequests] = useState([]);
+
+  const getHomeRequests = async () => {
+    const userRequests = await fetchUserRequests(profile.username);
+
+    setHomeRequests(userRequests);
+  };
+
+  useEffect(() => {
+    getHomeRequests();
+  }, []);
+
+  console.log(homeRequests);
+
   return (
     <Container>
       <Text style={commonStyles.displayHeading}>
@@ -36,7 +53,7 @@ function PostRegisterScreen({ navigation }) {
         <Text style={styles.actionSeparator}>or</Text>
         <Button mode="contained" onPress={() => navigation.navigate('CreateHome')}>Create a New Home</Button>
       </View>
-      <HomeRequests />
+      {/* {homeRequests.length ? <HomeRequests homeRequests={homeRequests} /> : null} */}
     </Container>
   );
 }

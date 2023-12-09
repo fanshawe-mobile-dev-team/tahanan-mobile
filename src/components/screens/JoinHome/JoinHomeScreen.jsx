@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View,
 } from 'react-native';
 import { Button } from 'react-native-paper';
 import commonStyles from '../../../theme/commonStyles';
-import { sendHomeRequest } from '../../../utils/api/homeApi';
+import { cancelHomeRequest, sendHomeRequest } from '../../../utils/api/homeApi';
 import { useProfile } from '../../hoc/ProfileContext';
+import colors from '../../../theme/colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,6 +19,9 @@ const styles = StyleSheet.create({
   image: {
     aspectRatio: 3 / 2,
     borderRadius: 24,
+  },
+  actions: {
+    gap: 10,
   },
   actionSeparator: {
     marginVertical: 12,
@@ -31,9 +35,11 @@ function JoinHomeScreen({ navigation, route }) {
       name,
       ownerId,
       description,
+      hasActiveRequest,
     },
   } = route.params;
   const { profile: { username } } = useProfile();
+  const [showCancel, setShowCancel] = useState(hasActiveRequest);
 
   const handleJoin = async () => {
     try {
@@ -44,7 +50,17 @@ function JoinHomeScreen({ navigation, route }) {
       };
 
       await sendHomeRequest(input);
-      navigation.navigate('PostRegister');
+      setShowCancel(true);
+    } catch ({ message }) {
+      Alert.alert('Request Failed', message);
+    }
+  };
+
+  const handleCancel = async () => {
+    console.log('CANCEL');
+    try {
+      await cancelHomeRequest(`${name}-${username}`);
+      setShowCancel(false);
     } catch ({ message }) {
       Alert.alert('Request Failed', message);
     }
@@ -66,7 +82,10 @@ function JoinHomeScreen({ navigation, route }) {
           {description}
         </Text>
         <View style={styles.actions}>
-          <Button mode="contained" onPress={handleJoin}>Join this Home</Button>
+          {showCancel
+            ? <Button mode="contained" buttonColor={colors.error.main} onPress={handleCancel}>Cancel Request</Button>
+            : <Button mode="contained" onPress={handleJoin}>Join this Home</Button>}
+          <Button mode="contained-tonal" onPress={() => navigation.goBack()}>Go Back</Button>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
