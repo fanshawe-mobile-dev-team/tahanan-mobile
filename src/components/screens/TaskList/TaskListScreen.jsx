@@ -14,9 +14,6 @@ import commonStyles from '../../../theme/commonStyles';
 import Container from '../../common/Container';
 import colors from '../../../theme/colors';
 
-// const BOTTOM_APPBAR_HEIGHT = 80;
-// const MEDIUM_FAB_HEIGHT = 56;
-
 function TaskListScreen() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const formattedDate = currentDate.toDateString();
