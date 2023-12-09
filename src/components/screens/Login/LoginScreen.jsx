@@ -5,6 +5,7 @@ import {
 import { Button, TextInput } from 'react-native-paper';
 import colors from '../../../theme/colors';
 import { useProfile } from '../../hoc/ProfileContext';
+import { fetchHome, fetchUserRequest } from '../../../utils/api/homeApi';
 
 const styles = StyleSheet.create({
   container: {
@@ -66,10 +67,14 @@ function LoginScreen({ navigation }) {
 
     try {
       const user = await login({ email, password });
+      const homeRequest = await fetchUserRequest(user.username);
 
       // TODO: Save user data
       if (user.homeId) {
         navigation.navigate('Dashboard');
+      } else if (homeRequest) {
+        const home = await fetchHome(homeRequest.homeId);
+        navigation.navigate('JoinHome', { home, hasActiveRequest: true });
       } else {
         navigation.navigate('PostRegister');
       }

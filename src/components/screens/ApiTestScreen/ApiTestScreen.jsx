@@ -2,8 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { Button } from 'react-native-paper';
 import {
-  acceptHomeRequest,
-  createHome, fetchHome, fetchHomeRequests, sendHomeRequest, updateHome,
+  fetchHomeRequests,
 } from '../../../utils/api/homeApi';
 import commonStyles from '../../../theme/commonStyles';
 

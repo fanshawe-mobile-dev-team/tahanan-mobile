@@ -27,6 +27,13 @@ const styles = StyleSheet.create({
     marginVertical: 12,
     textAlign: 'center',
   },
+  activeRequestContainer: {
+    height: 32,
+  },
+  activeRequestText: {
+    color: colors.outline.main,
+    textAlign: 'center',
+  },
 });
 
 function JoinHomeScreen({ navigation, route }) {
@@ -35,8 +42,8 @@ function JoinHomeScreen({ navigation, route }) {
       name,
       ownerId,
       description,
-      hasActiveRequest,
     },
+    hasActiveRequest,
   } = route.params;
   const { profile: { username } } = useProfile();
   const [showCancel, setShowCancel] = useState(hasActiveRequest);
@@ -81,11 +88,20 @@ function JoinHomeScreen({ navigation, route }) {
         <Text style={commonStyles.displaySubheading}>
           {description}
         </Text>
+        <View style={[styles.activeRequestContainer, { opacity: showCancel ? 1 : 0 }]}>
+          <Text style={styles.activeRequestText}>
+            You have an active request to join this home.
+          </Text>
+        </View>
         <View style={styles.actions}>
           {showCancel
             ? <Button mode="contained" buttonColor={colors.error.main} onPress={handleCancel}>Cancel Request</Button>
-            : <Button mode="contained" onPress={handleJoin}>Join this Home</Button>}
-          <Button mode="contained-tonal" onPress={() => navigation.goBack()}>Go Back</Button>
+            : (
+              <>
+                <Button mode="contained" onPress={handleJoin}>Join this Home</Button>
+                <Button mode="contained-tonal" onPress={() => navigation.navigate('PostRegister')}>Find another home</Button>
+              </>
+            )}
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

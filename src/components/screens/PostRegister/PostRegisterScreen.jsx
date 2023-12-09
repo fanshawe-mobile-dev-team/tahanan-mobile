@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   StyleSheet, Text, View,
 } from 'react-native';
@@ -6,8 +6,6 @@ import { Button } from 'react-native-paper';
 import commonStyles from '../../../theme/commonStyles';
 import colors from '../../../theme/colors';
 import Container from '../../common/Container';
-import { fetchUserRequests } from '../../../utils/api/homeApi';
-import { useProfile } from '../../hoc/ProfileContext';
 
 const styles = StyleSheet.create({
   actions: {
@@ -23,22 +21,6 @@ const styles = StyleSheet.create({
 });
 
 function PostRegisterScreen({ navigation }) {
-  const { profile } = useProfile();
-
-  const [homeRequests, setHomeRequests] = useState([]);
-
-  const getHomeRequests = async () => {
-    const userRequests = await fetchUserRequests(profile.username);
-
-    setHomeRequests(userRequests);
-  };
-
-  useEffect(() => {
-    getHomeRequests();
-  }, []);
-
-  console.log(homeRequests);
-
   return (
     <Container>
       <Text style={commonStyles.displayHeading}>

@@ -73,9 +73,10 @@ const commonStyles = StyleSheet.create({
     fontSize: 22,
     color: colors.primary.main,
     marginHorizontal: 16,
-  errorContainer: {
-    minHeight: 20,
-    marginBottom: 10,
+    errorContainer: {
+      minHeight: 20,
+      marginBottom: 10,
+    },
   },
   formError: {
     color: colors.error.main,
