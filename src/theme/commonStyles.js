@@ -66,6 +66,13 @@ const commonStyles = StyleSheet.create({
     fontSize: 22,
     color: colors.primary.main,
   },
+  errorContainer: {
+    minHeight: 20,
+    marginBottom: 10,
+  },
+  formError: {
+    color: colors.error.main,
+  },
 });
 
 export default commonStyles;

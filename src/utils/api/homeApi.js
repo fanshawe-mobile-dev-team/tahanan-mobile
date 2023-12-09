@@ -26,7 +26,7 @@ export const createHome = async (input) => {
       throw new Error('Home name already already taken');
     }
 
-    await setDoc(doc(db, 'homes', name), input);
+    await setDoc(doc(db, 'homes', name), { ...input, users: [ownerId] });
     await setDoc(doc(db, 'users', ownerId), { homeId: name }, { merge: true });
 
     const newHome = (await getDoc(homeRef)).data();
@@ -79,8 +79,9 @@ export const sendHomeRequest = async (input) => {
   // const input = {
   //   userId: 'user1',
   //   homeId: 'home1',
-  //   ownerId: 'user2'
+  //   ownerId: 'owner'
   // };
+
   const { userId, homeId } = input;
 
   try {
