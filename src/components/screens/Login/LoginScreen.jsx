@@ -69,7 +69,6 @@ function LoginScreen({ navigation }) {
       const user = await login({ email, password });
       const homeRequest = await fetchUserRequest(user.username);
 
-      // TODO: Save user data
       if (user.homeId) {
         navigation.navigate('Dashboard');
       } else if (homeRequest) {

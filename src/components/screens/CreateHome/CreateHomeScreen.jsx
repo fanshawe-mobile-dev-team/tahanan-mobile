@@ -72,7 +72,7 @@ function CreateHomeScreen({ navigation }) {
       </View>
       <View style={styles.footer}>
         <Text>Home already exists? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('JoinHome')}>
+        <TouchableOpacity onPress={() => navigation.navigate('SearchHome')}>
           <Text style={styles.footerButton}>Join an Existing Home</Text>
         </TouchableOpacity>
       </View>

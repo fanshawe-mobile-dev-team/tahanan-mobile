@@ -144,7 +144,12 @@ export const fetchUserRequest = async (userId) => {
     const requestsQry = query(homeRequestsCollection, where('userId', '==', userId));
     const requestsSnapshots = await getDocs(requestsQry);
 
-    const request = requestsSnapshots.docs[0].data();
+    const request = requestsSnapshots.docs[0]?.data();
+
+    if (!request) {
+      return null;
+    }
+
     request.id = requestsSnapshots.docs[0].id;
 
     return request;
