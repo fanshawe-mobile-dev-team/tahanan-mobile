@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { Button } from 'react-native-paper';
 import {
   acceptHomeRequest,
-  createHome, fetchHome, fetchHomeJoinRequests, sendHomeRequest, updateHome,
+  createHome, fetchHome, fetchHomeRequests, sendHomeRequest, updateHome,
 } from '../../../utils/api/homeApi';
 import commonStyles from '../../../theme/commonStyles';
 
@@ -52,7 +52,7 @@ function ApiTestScreen() {
 
     // await acceptHomeRequest('home1-testUser2');
 
-    const res = await fetchHomeJoinRequests('home1');
+    const res = await fetchHomeRequests('home1');
     console.log('TEST RES', res);
   };
 

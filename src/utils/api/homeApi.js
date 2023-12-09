@@ -126,7 +126,7 @@ export const acceptHomeRequest = async (homeRequestId) => {
   }
 };
 
-export const fetchHomeJoinRequests = async (homeId) => {
+export const fetchHomeRequests = async (homeId) => {
   try {
     const requestsQry = query(homeRequestsCollection, where('homeId', '==', homeId));
     const requestsSnapshots = await getDocs(requestsQry);
