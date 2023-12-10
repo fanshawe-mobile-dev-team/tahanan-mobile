@@ -6,7 +6,7 @@ const defaultTheme = {
   colors: {
     ...DefaultTheme.colors,
     primary: colors.primary.main,
-    background: '#fff',
+    background: colors.background.light,
     // primary: 'rgb(255, 45, 85)',
   },
 };
