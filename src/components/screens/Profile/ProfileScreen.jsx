@@ -50,8 +50,6 @@ function ProfileScreen({ navigation }) {
     navigation.navigate('Login');
   };
 
-  console.log(profile);
-
   return (
     <Container>
       <View style={styles.imageContainer}>

@@ -57,8 +57,6 @@ function DashboardScreen() {
 
   const isFocused = useIsFocused();
 
-  console.log(profile);
-
   useEffect(() => {
     if (isFocused) {
       fetchTodayTask();
