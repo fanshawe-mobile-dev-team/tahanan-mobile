@@ -6,6 +6,7 @@ import {
   View,
 } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
+import { useProfile } from '../../hoc/ProfileContext';
 import commonStyles from '../../../theme/commonStyles';
 import Container from '../../common/Container';
 
@@ -30,49 +31,60 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: 20,
   },
+  inputBox: {
+    borderWidth: 1,
+    borderColor: '#000',
+    padding: 10,
+    marginBottom: 10,
+  },
+  userInfo: {
+    marginTop: 5,
+    fontSize: 20,
+  },
 });
 
-function ProfileScreen() {
+function ProfileScreen({ navigation }) {
+  const { profile, logout } = useProfile();
+
+  const handleLogout = () => {
+    logout();
+    navigation.navigate('Login');
+  };
+
+  console.log(profile);
+
   return (
     <Container>
       <View style={styles.imageContainer}>
         <Image source={{ uri: 'https://picsum.photos/600' }} style={styles.image} />
         <Text style={styles.subHeading}>
-          Leviel
+          {profile.username}
         </Text>
         <Text style={styles.displayHeading}>
-          Home Admin
+          {profile.username}
         </Text>
       </View>
       <View>
-        <TextInput
-          style={commonStyles.commonInput}
-          label="First Name"
-          placeholder="Enter first name"
-        />
-        <TextInput
-          style={commonStyles.commonInput}
-          label="Last Name"
-          placeholder="Enter last name"
-        />
-        <TextInput
-          style={commonStyles.commonInput}
-          label="Email"
-          placeholder="Enter email"
-        />
-        <TextInput
-          style={commonStyles.commonInput}
-          label="Contact Number"
-          placeholder="Enter phone number"
-        />
-        <TextInput
-          style={commonStyles.commonInput}
-          label="Username"
-          placeholder="Enter username"
-        />
-        <Button mode="contained">Sign Out</Button>
+        <View style={styles.inputBox}>
+          <Text style={styles.displayHeading}>First Name</Text>
+          <Text style={styles.userInfo}>{profile.firstName}</Text>
+        </View>
+        <View style={styles.inputBox}>
+          <Text style={styles.displayHeading}>Last Name</Text>
+          <Text style={styles.userInfo}>{profile.lastName}</Text>
+        </View>
+        <View style={styles.inputBox}>
+          <Text style={styles.displayHeading}>Email</Text>
+          <Text style={styles.userInfo}>{profile.email}</Text>
+        </View>
+        <View style={styles.inputBox}>
+          <Text style={styles.displayHeading}>Contact Number</Text>
+          <Text style={styles.userInfo}>{profile.phone}</Text>
+        </View>
+        <Button mode="contained" onPress={handleLogout}>Sign Out</Button>
       </View>
     </Container>
+
   );
 }
 
