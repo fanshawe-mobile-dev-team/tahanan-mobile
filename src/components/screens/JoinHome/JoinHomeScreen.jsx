@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   Alert,
-  Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View,
+  Image, StyleSheet, Text, View,
 } from 'react-native';
 import { Button } from 'react-native-paper';
 import commonStyles from '../../../theme/commonStyles';
@@ -9,6 +9,7 @@ import { cancelHomeRequest, sendHomeRequest } from '../../../utils/api/homeApi';
 import { useProfile } from '../../hoc/ProfileContext';
 import colors from '../../../theme/colors';
 import home2 from '../../../../assets/home2.jpg';
+import Container from '../../common/Container';
 
 const styles = StyleSheet.create({
   container: {
@@ -75,37 +76,35 @@ function JoinHomeScreen({ navigation, route }) {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
-      <ScrollView>
-        <View style={styles.imageContainer}>
-          <Image source={home2} style={styles.image} />
-        </View>
-        <Text style={commonStyles.displayHeading}>
-          {name}
+    <Container>
+      <View style={styles.imageContainer}>
+        <Image source={home2} style={styles.image} />
+      </View>
+      <Text style={commonStyles.displayHeading}>
+        {name}
+      </Text>
+      <Text style={commonStyles.displaySubheading}>
+        {`by ${ownerId}`}
+      </Text>
+      <Text style={commonStyles.displaySubheading}>
+        {description}
+      </Text>
+      <View style={[styles.activeRequestContainer, { opacity: showCancel ? 1 : 0 }]}>
+        <Text style={styles.activeRequestText}>
+          You have an active request to join this home.
         </Text>
-        <Text style={commonStyles.displaySubheading}>
-          {`by ${ownerId}`}
-        </Text>
-        <Text style={commonStyles.displaySubheading}>
-          {description}
-        </Text>
-        <View style={[styles.activeRequestContainer, { opacity: showCancel ? 1 : 0 }]}>
-          <Text style={styles.activeRequestText}>
-            You have an active request to join this home.
-          </Text>
-        </View>
-        <View style={styles.actions}>
-          {showCancel
-            ? <Button mode="contained" buttonColor={colors.error.main} onPress={handleCancel}>Cancel Request</Button>
-            : (
-              <>
-                <Button mode="contained" onPress={handleJoin}>Join this Home</Button>
-                <Button mode="contained-tonal" onPress={() => navigation.navigate('PostRegister')}>Find another home</Button>
-              </>
-            )}
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </View>
+      <View style={styles.actions}>
+        {showCancel
+          ? <Button mode="contained" buttonColor={colors.error.main} onPress={handleCancel}>Cancel Request</Button>
+          : (
+            <>
+              <Button mode="contained" onPress={handleJoin}>Join this Home</Button>
+              <Button mode="contained-tonal" onPress={() => navigation.navigate('PostRegister')}>Find another home</Button>
+            </>
+          )}
+      </View>
+    </Container>
   );
 }
 
