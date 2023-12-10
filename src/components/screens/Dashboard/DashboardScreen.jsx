@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import {
@@ -20,6 +19,7 @@ import { useProfile } from '../../hoc/ProfileContext';
 import { DEFAULT_AVATAR_IMAGE } from '../../../utils/api/constants';
 import { fetchUserTasks } from '../../../utils/api/taskApi';
 import colors from '../../../theme/colors';
+import TaskItem from '../../common/TaskItem';
 
 const styles = StyleSheet.create({
   noTaskContainer: {
@@ -27,10 +27,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 48,
   },
+  headContainer: {
+
+  },
 });
 
 // TODO:Set username in hello and number of tasks
-function DashboardScreen({ navigation }) {
+function DashboardScreen() {
   const { profile } = useProfile();
   const [loading, setLoading] = useState(true);
   const [tasks, setTasks] = useState([]);
@@ -60,20 +63,32 @@ function DashboardScreen({ navigation }) {
     }
   }, [isFocused]);
 
-  const handleClickTask = (task) => {
-    navigation.navigate('Task', { task });
-  };
+  const incompleteTasks = tasks.filter((task) => !task.isCompleted).length;
+
+  let todayMessage;
+
+  switch (incompleteTasks) {
+    case 0:
+      todayMessage = 'You have completed all your tasks today. Good job!';
+      break;
+    case 1:
+      todayMessage = 'You have 1 incomplete task today.';
+      break;
+    default:
+      todayMessage = `You have ${incompleteTasks} incomplete task today.`;
+      break;
+  }
 
   return (
     <Container>
       <Text style={commonStyles.dashbDate}>{formattedDate}</Text>
       <Surface style={commonStyles.commonSurface} elevation={4}>
-        <View style={{ flexDirection: 'row' }}>
-          <Avatar.Image size={80} source={DEFAULT_AVATAR_IMAGE} />
-          <View style={{ marginTop: 12 }}>
-            <Text style={commonStyles.commonTitle}>{`Hello, ${profile.username}!`}</Text>
-            <Text style={commonStyles.commonSubTitle}>You have 12 Tasks today</Text>
-          </View>
+        <Avatar.Image size={60} source={DEFAULT_AVATAR_IMAGE} style={{ flexShrink: 0 }} />
+        <View style={{ flexShrink: 1 }}>
+          <Text style={commonStyles.commonTitle}>{`Hello, ${profile.username}!`}</Text>
+          <Text style={commonStyles.commonSubTitle}>
+            {todayMessage}
+          </Text>
         </View>
       </Surface>
       {loading && (
@@ -92,33 +107,7 @@ function DashboardScreen({ navigation }) {
         <List.Section style={{ marginTop: 24 }}>
           <Text style={commonStyles.displayHeading}>Tasks</Text>
 
-          {tasks.map((task) => {
-            const {
-              description, name, isCompleted, id,
-            } = task;
-
-            return (
-              <TouchableOpacity key={id} onPress={() => handleClickTask(task)}>
-                <List.Item
-                  style={commonStyles.taskListItem}
-                  title={name}
-                  description={description}
-                  left={(props) => (isCompleted ? (
-                    <List.Icon
-                      {...props}
-                      icon="checkbox-marked-circle-outline"
-                    />
-                  ) : (
-                    <List.Icon
-                      {...props}
-                      icon="checkbox-blank-circle-outline"
-                    />
-                  ))}
-                  // right={(props) => <List.Icon {...props} icon="chevron-right" />}
-                />
-              </TouchableOpacity>
-            );
-          })}
+          {tasks.map((task) => <TaskItem key={task.id} task={task} />)}
         </List.Section>
       ) : (
         <View style={styles.noTaskContainer}>

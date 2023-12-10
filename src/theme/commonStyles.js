@@ -33,14 +33,11 @@ const commonStyles = StyleSheet.create({
   },
   commonTitle: {
     fontWeight: 'bold',
-    marginBottom: 12,
     textAlign: 'left',
     marginLeft: 16,
     fontSize: 16,
   },
   commonSubTitle: {
-    marginBottom: 12,
-    textAlign: 'center',
     fontSize: 16,
     marginLeft: 16,
   },
@@ -52,9 +49,11 @@ const commonStyles = StyleSheet.create({
     marginVertical: 4,
   },
   commonSurface: {
-    padding: 8,
+    padding: 24,
     borderRadius: 16,
     backgroundColor: '#B1B3FF',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   taskListItem: {
     backgroundColor: '#D4D4FF',
