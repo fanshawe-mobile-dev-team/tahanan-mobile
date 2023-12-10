@@ -29,6 +29,7 @@ function MainScreen() {
         name="Dashboard"
         component={DashboardScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="view-dashboard" color={color} size={26} />
           ),
@@ -39,6 +40,7 @@ function MainScreen() {
         name="TaskList"
         component={TaskListScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="format-list-bulleted"
@@ -53,6 +55,7 @@ function MainScreen() {
         name="CreateTask"
         component={CreateTaskScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="plus-box-outline" color={color} size={26} />
           ),
@@ -63,6 +66,7 @@ function MainScreen() {
         name="HomeProfile"
         component={HomeProfileScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home-account" color={color} size={26} />
           ),
@@ -73,6 +77,7 @@ function MainScreen() {
         name="UserProfile"
         component={ProfileScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" color={color} size={26} />
           ),
