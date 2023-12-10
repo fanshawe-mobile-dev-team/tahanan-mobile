@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Image,
   StyleSheet,
   Text,
   View,
@@ -56,7 +55,7 @@ function ProfileScreen({ navigation }) {
   return (
     <Container>
       <View style={styles.imageContainer}>
-        <Avatar source={DEFAULT_AVATAR_IMAGE}> </Avatar>
+        <Avatar.Image source={DEFAULT_AVATAR_IMAGE} />
         <Text style={styles.subHeading}>
           {profile.username}
         </Text>
@@ -84,7 +83,6 @@ function ProfileScreen({ navigation }) {
         <Button mode="contained" onPress={handleLogout}>Sign Out</Button>
       </View>
     </Container>
-
   );
 }
 
