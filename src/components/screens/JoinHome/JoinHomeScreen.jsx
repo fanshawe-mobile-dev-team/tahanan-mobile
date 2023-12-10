@@ -64,7 +64,6 @@ function JoinHomeScreen({ navigation, route }) {
   };
 
   const handleCancel = async () => {
-    console.log('CANCEL');
     try {
       await cancelHomeRequest(`${name}-${username}`);
       setShowCancel(false);
