@@ -41,7 +41,6 @@ function CreateTaskScreen({ navigation }) {
         assignedUser,
         dueDate: moment(dueDate).format('YYYY-MM-DD'),
       };
-      console.log(input);
       await createTask(input);
       navigation.navigate('TaskList');
     } catch (error) {
