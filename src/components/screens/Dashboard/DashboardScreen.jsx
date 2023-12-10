@@ -13,6 +13,7 @@ import {
 } from 'react-native-paper';
 // import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment';
+import { useIsFocused } from '@react-navigation/native';
 import commonStyles from '../../../theme/commonStyles';
 import Container from '../../common/Container';
 import { useProfile } from '../../hoc/ProfileContext';
@@ -37,10 +38,6 @@ function DashboardScreen({ navigation }) {
   const currentDate = new Date();
   const formattedDate = currentDate.toDateString();
 
-  const openTaskHandler = async () => {
-    // TODO: create handler to open task
-  };
-
   const fetchTodayTask = async () => {
     const date = moment().format('YYYY-MM-DD');
 
@@ -55,14 +52,16 @@ function DashboardScreen({ navigation }) {
     setLoading(false);
   };
 
-  useEffect(() => {
-    fetchTodayTask();
-  }, []);
+  const isFocused = useIsFocused();
 
-  const handleClickTask = (id) => {
-    console.log(id);
-    // console.log(navigation);
-    navigation.navigate('Task', { taskId: id });
+  useEffect(() => {
+    if (isFocused) {
+      fetchTodayTask();
+    }
+  }, [isFocused]);
+
+  const handleClickTask = (task) => {
+    navigation.navigate('Task', { task });
   };
 
   return (
@@ -93,19 +92,33 @@ function DashboardScreen({ navigation }) {
         <List.Section style={{ marginTop: 24 }}>
           <Text style={commonStyles.displayHeading}>Tasks</Text>
 
-          {tasks.map(({
-            description, name, isCompleted, id,
-          }) => (
-            <TouchableOpacity key={id} onPress={() => handleClickTask(id)}>
-              <List.Item
-                style={commonStyles.taskListItem}
-                title={name}
-                description={description}
-                left={(props) => (isCompleted ? <List.Icon {...props} icon="radiobox-marked" /> : <List.Icon {...props} icon="radiobox-blank" />)}
-                right={(props) => <List.Icon {...props} icon="open-in-new" onPress={openTaskHandler} />}
-              />
-            </TouchableOpacity>
-          ))}
+          {tasks.map((task) => {
+            const {
+              description, name, isCompleted, id,
+            } = task;
+
+            return (
+              <TouchableOpacity key={id} onPress={() => handleClickTask(task)}>
+                <List.Item
+                  style={commonStyles.taskListItem}
+                  title={name}
+                  description={description}
+                  left={(props) => (isCompleted ? (
+                    <List.Icon
+                      {...props}
+                      icon="checkbox-marked-circle-outline"
+                    />
+                  ) : (
+                    <List.Icon
+                      {...props}
+                      icon="checkbox-blank-circle-outline"
+                    />
+                  ))}
+                  // right={(props) => <List.Icon {...props} icon="chevron-right" />}
+                />
+              </TouchableOpacity>
+            );
+          })}
         </List.Section>
       ) : (
         <View style={styles.noTaskContainer}>

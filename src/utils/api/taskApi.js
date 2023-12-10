@@ -111,9 +111,9 @@ export const updateTask = async (input) => {
     const taskRef = doc(db, 'tasks', taskId);
     await setDoc(taskRef, updateValues, { merge: true });
 
-    const updatedTask = (await getDoc(taskRef)).data();
+    const updatedTask = await getDoc(taskRef);
 
-    return updatedTask;
+    return { ...updatedTask.data(), id: taskId };
   } catch ({ message }) {
     throw new Error(message);
   }

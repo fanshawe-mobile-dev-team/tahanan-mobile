@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
-import { Button, Avatar } from 'react-native-paper';
+import { Button, Avatar, ActivityIndicator } from 'react-native-paper';
+import moment from 'moment';
 import commonStyles from '../../../theme/commonStyles';
+import { fetchTask, updateTask } from '../../../utils/api/taskApi';
+import colors from '../../../theme/colors';
+import Container from '../../common/Container';
+import { DEFAULT_DATE_DISPLAY_FORMAT } from '../../../utils/api/constants';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,70 +25,88 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     color: 'black',
-    marginBottom: 15,
     marginLeft: 5,
   },
   bold: {
     fontWeight: 'bold',
   },
   assigneeContainer: {
-    marginTop: 10,
+    marginVertical: 20,
   },
   assignee: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 5,
+    paddingVertical: 10,
   },
-  image: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 10,
+  loadingContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  statusContainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
+  },
+  status: {
+    fontWeight: 'bold',
   },
 });
 
-function TaskScreen() {
+function TaskScreen({ navigation, route }) {
+  const [task, setTask] = useState(route.params.task);
+  const [loading, setLoading] = useState(false);
+
+  const handleToggleComplete = async (isCompleted) => {
+    setLoading(true);
+
+    const input = {
+      taskId: task.id,
+      isCompleted,
+    };
+
+    const updatedTask = await updateTask(input);
+
+    setTask(updatedTask);
+    setLoading(false);
+  };
+
+  const {
+    dueDate, description, assignedUser, isCompleted,
+  } = task;
+
   return (
-    <KeyboardAvoidingView style={styles.container}>
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.text}>
-            Due:
-            {' '}
-            <Text style={styles.bold}>11/13/2023</Text>
-          </Text>
-          <Text style={styles.text}>
-            Created Date:
-            {' '}
-            <Text style={styles.bold}>11/10/2023</Text>
-          </Text>
-          <View style={styles.assigneeContainer}>
-            <Text style={styles.text}>Assigned to:</Text>
-            <View style={styles.assignee}>
-              <Avatar.Icon size={25} icon="account" />
-              <Text style={styles.text}>jdoe123</Text>
-            </View>
-            <View style={styles.assignee}>
-              <Avatar.Icon size={25} icon="account" />
-              <Text style={styles.text}>ssmith2</Text>
-            </View>
-          </View>
-          <Text style={commonStyles.displayHeading}>
-            Description
-          </Text>
-          <Text style={commonStyles.displaySubheading}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </Text>
-          <View style={styles.actions}>
-            <Button mode="contained">Mark as Complete</Button>
-          </View>
+    <Container>
+
+      <Text style={styles.text}>
+        {`Due: ${moment(dueDate).format(DEFAULT_DATE_DISPLAY_FORMAT)}`}
+      </Text>
+      <View style={styles.assigneeContainer}>
+        <Text style={styles.text}>Assigned to:</Text>
+        <View style={styles.assignee}>
+          <Avatar.Icon size={25} icon="account" />
+          <Text style={styles.text}>{assignedUser}</Text>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </View>
+      <View style={styles.statusContainer}>
+        <Text>Status: </Text>
+        <Text style={[styles.status, { color: isCompleted ? colors.success.main : colors.error.main }]}>{isCompleted ? 'Completed' : 'Incomplete'}</Text>
+      </View>
+      <Text style={commonStyles.displayHeading}>
+        Description
+      </Text>
+      <Text style={commonStyles.displaySubheading}>
+        {description}
+      </Text>
+      <View style={styles.actions}>
+        <Button
+          mode="contained"
+          disabled={loading}
+          onPress={() => handleToggleComplete(!isCompleted)}
+        >
+          {isCompleted ? 'Mark as Incomplete' : 'Mark as Complete'}
+
+        </Button>
+      </View>
+    </Container>
   );
 }
 
