@@ -8,8 +8,9 @@ import moment from 'moment';
 import { BottomSheet, ListItem } from '@rneui/themed';
 import * as SMS from 'expo-sms';
 import * as MailComposer from 'expo-mail-composer';
+import { useNavigation } from '@react-navigation/native';
 import commonStyles from '../../../theme/commonStyles';
-import { updateTask } from '../../../utils/api/taskApi';
+import { deleteTask, updateTask } from '../../../utils/api/taskApi';
 import colors from '../../../theme/colors';
 import Container from '../../common/Container';
 import { DEFAULT_DATE_DISPLAY_FORMAT } from '../../../utils/api/constants';
@@ -66,6 +67,9 @@ function TaskScreen({ route }) {
   const { profile } = useProfile();
   const [showDrawer, setShowDrawer] = useState(false);
   const [user, setUser] = useState();
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+
+  const navigation = useNavigation();
 
   const handleToggleComplete = async (isCompleted) => {
     setLoading(true);
@@ -125,6 +129,28 @@ function TaskScreen({ route }) {
     },
   ];
 
+  const handleDeleteTask = async () => {
+    try {
+      await deleteTask(task.id);
+      setShowConfirmDelete(false);
+      navigation.goBack();
+    } catch ({ message }) {
+      Alert.alert('Delete Task Failed', message);
+    }
+  };
+
+  const deleteChoices = [
+    {
+      title: 'Continue to delete task',
+      onPress: handleDeleteTask,
+      titleStyle: { color: colors.error.main },
+    },
+    {
+      title: 'Cancel',
+      onPress: () => setShowConfirmDelete(false),
+    },
+  ];
+
   const getUser = async () => {
     const userData = await fetchUser(task.assignedUser);
 
@@ -174,6 +200,14 @@ function TaskScreen({ route }) {
               {`Remind ${assignedUser}`}
           </Button>
         )}
+        <Button
+          mode="contained"
+          disabled={loading}
+          buttonColor={colors.error.main}
+          onPress={() => setShowConfirmDelete(true)}
+        >
+          Delete Task
+        </Button>
       </View>
       <BottomSheet
         modalProps={{}}
@@ -182,6 +216,24 @@ function TaskScreen({ route }) {
         containerStyle={{ backgroundColor: 'transparent' }}
       >
         {list.map((l) => (
+          <ListItem
+            key={l.title}
+            containerStyle={l.containerStyle}
+            onPress={l.onPress}
+          >
+            <ListItem.Content>
+              <ListItem.Title style={l.titleStyle}>{l.title}</ListItem.Title>
+            </ListItem.Content>
+          </ListItem>
+        ))}
+      </BottomSheet>
+      <BottomSheet
+        modalProps={{}}
+        isVisible={showConfirmDelete}
+        onBackdropPress={() => setShowConfirmDelete(false)}
+        containerStyle={{ backgroundColor: 'transparent' }}
+      >
+        {deleteChoices.map((l) => (
           <ListItem
             key={l.title}
             containerStyle={l.containerStyle}
