@@ -8,6 +8,7 @@ import commonStyles from '../../../theme/commonStyles';
 import { cancelHomeRequest, sendHomeRequest } from '../../../utils/api/homeApi';
 import { useProfile } from '../../hoc/ProfileContext';
 import colors from '../../../theme/colors';
+import home2 from '../../../../assets/home2.jpg';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,7 +18,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   image: {
-    aspectRatio: 3 / 2,
+    height: 250,
+    width: '100%',
     borderRadius: 24,
   },
   actions: {
@@ -76,7 +78,7 @@ function JoinHomeScreen({ navigation, route }) {
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView>
         <View style={styles.imageContainer}>
-          <Image source={{ uri: 'https://picsum.photos/600' }} style={styles.image} />
+          <Image source={home2} style={styles.image} />
         </View>
         <Text style={commonStyles.displayHeading}>
           {name}

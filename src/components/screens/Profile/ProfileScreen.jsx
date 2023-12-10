@@ -5,9 +5,10 @@ import {
   Text,
   View,
 } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, Avatar } from 'react-native-paper';
 import { useProfile } from '../../hoc/ProfileContext';
 import Container from '../../common/Container';
+import { DEFAULT_AVATAR_IMAGE } from '../../../utils/api/constants';
 
 const styles = StyleSheet.create({
   container: {
@@ -55,7 +56,7 @@ function ProfileScreen({ navigation }) {
   return (
     <Container>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: 'https://picsum.photos/600' }} style={styles.image} />
+        <Avatar source={DEFAULT_AVATAR_IMAGE}> </Avatar>
         <Text style={styles.subHeading}>
           {profile.username}
         </Text>

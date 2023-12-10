@@ -8,6 +8,7 @@ import { useProfile } from '../../hoc/ProfileContext';
 import { fetchHome, fetchUserRequest } from '../../../utils/api/homeApi';
 import Container from '../../common/Container';
 import commonStyles from '../../../theme/commonStyles';
+import home1 from '../../../../assets/home1.jpg';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,7 +20,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   image: {
-    aspectRatio: 3 / 2,
+    height: 250,
+    width: '100%',
     borderRadius: 24,
   },
   title: {
@@ -85,7 +87,7 @@ function LoginScreen({ navigation }) {
   return (
     <Container>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: 'https://picsum.photos/600' }} style={styles.image} />
+        <Image source={home1} style={styles.image} />
       </View>
       <View style={styles.form}>
         <Text style={[commonStyles.displayHeading, styles.title]}>Login</Text>
