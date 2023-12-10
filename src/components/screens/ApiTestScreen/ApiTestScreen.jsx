@@ -6,7 +6,7 @@ import {
 } from '../../../utils/api/homeApi';
 import commonStyles from '../../../theme/commonStyles';
 import {
-  createTask, deleteTask, fetchTask, updateTask,
+  createTask, deleteTask, fetchHomeTasks, fetchTask, fetchUserTasks, updateTask,
 } from '../../../utils/api/taskApi';
 
 function ApiTestScreen() {
@@ -59,10 +59,10 @@ function ApiTestScreen() {
     // const input = {
     //   creatorId: 'testUser',
     //   homeId: 'home1',
-    //   name: 'Sweep floor',
+    //   name: 'Sweep floor twice 2',
     //   description: 'Sweep floor of the whole house',
-    //   assignedUser: 'user1',
-    //   dueDate: '2022-12-9',
+    //   assignedUser: 'testUser2',
+    //   dueDate: '2022-12-12',
     // };
 
     // const res = await createTask(input);
@@ -79,9 +79,23 @@ function ApiTestScreen() {
 
     // const res = await updateTask(input);
 
-    await deleteTask('0COX8HmUCfyeD9ezI8tj');
+    // await deleteTask('0COX8HmUCfyeD9ezI8tj');
+
+    // const query = {
+    //   userId: 'testUser',
+    //   // date: '2022-12-9',
+    // };
+    // const res = await fetchUserTasks(query);
+
+    // const query = {
+    //   homeId: 'home1',
+    //   date: '2022-12-9',
+    // };
+
+    // const res = await fetchHomeTasks(query);
 
     // console.log('TEST RES', res);
+    // console.log('TEST RES', res.length);
   };
 
   return (
