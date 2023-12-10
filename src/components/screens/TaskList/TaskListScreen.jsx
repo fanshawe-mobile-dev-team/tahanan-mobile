@@ -8,6 +8,7 @@ import {
   List,
   Surface,
   Icon,
+  Tooltip,
 } from 'react-native-paper';
 import { DatePickerModal } from 'react-native-paper-dates';
 import commonStyles from '../../../theme/commonStyles';
@@ -73,40 +74,48 @@ function TaskListScreen() {
   return (
     <Container>
       <TouchableOpacity onPress={() => setOpen(true)}>
-        <Surface style={commonStyles.commonSurface} elevation={4}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={commonStyles.dashbDate2}>
-              {formattedDate}
-            </Text>
-            <Icon
-              source="calendar"
-              color={colors.primary.main}
-              size={30}
-            />
+        <Tooltip title="Click to hange the date">
+          <Surface style={commonStyles.commonSurface} elevation={4}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={commonStyles.dashbDate2}>
+                {formattedDate}
+              </Text>
+              <Icon
+                source="calendar"
+                color={colors.primary.main}
+                size={30}
+              />
 
-            <DatePickerModal
-              locale="en"
-              mode="single"
-              visible={open}
-              onDismiss={onDismissSingle}
-              date={date}
-              onConfirm={onConfirmSingle}
-            />
-          </View>
-        </Surface>
+              <DatePickerModal
+                locale="en"
+                mode="single"
+                visible={open}
+                onDismiss={onDismissSingle}
+                date={date}
+                onConfirm={onConfirmSingle}
+              />
+            </View>
+          </Surface>
+        </Tooltip>
       </TouchableOpacity>
 
       <List.Section style={{ marginTop: 24 }}>
         <Text style={commonStyles.displayHeading}>Tasks</Text>
         {sampleTasks.map(({ id, title, description }) => (
-          <List.Item
+          <TouchableOpacity
             key={id}
-            style={commonStyles.taskListItem}
-            title={title}
-            description={description}
-            left={(props) => <List.Icon {...props} icon="radiobox-marked" />}
-            right={(props) => <List.Icon {...props} icon="open-in-new" onPress={openTaskHandler} />}
-          />
+            activeOpacity={0.2}
+            onPress={openTaskHandler}
+          >
+            <List.Item
+              style={commonStyles.taskListItem}
+              title={title}
+              description={description}
+              left={(props) => <List.Icon {...props} icon="radiobox-marked" />}
+              right={(props) => <List.Icon {...props} icon="open-in-new" />}
+            />
+          </TouchableOpacity>
+
         ))}
       </List.Section>
 
