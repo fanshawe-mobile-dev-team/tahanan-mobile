@@ -4,9 +4,9 @@ import {
   Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View,
 } from 'react-native';
 import { Button } from 'react-native-paper';
-import commonStyles from '../../../theme/commonStyles';
 import { sendHomeRequest } from '../../../utils/api/homeApi';
 import { useProfile } from '../../hoc/ProfileContext';
+import commonStyles from '../../../theme/commonStyles';
 
 const styles = StyleSheet.create({
   container: {
