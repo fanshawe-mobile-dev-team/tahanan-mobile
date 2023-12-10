@@ -7,7 +7,6 @@ import { Button } from 'react-native-paper';
 import commonStyles from '../../../theme/commonStyles';
 import { cancelHomeRequest, sendHomeRequest } from '../../../utils/api/homeApi';
 import { useProfile } from '../../hoc/ProfileContext';
-import commonStyles from '../../../theme/commonStyles';
 import colors from '../../../theme/colors';
 
 const styles = StyleSheet.create({

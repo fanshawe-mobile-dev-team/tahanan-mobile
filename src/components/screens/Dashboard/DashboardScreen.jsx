@@ -40,7 +40,7 @@ function DashboardScreen() {
         </View>
       </Surface>
       <List.Section style={{ marginTop: 24 }}>
-        <Text style={commonStyles.displayHeading}>Tasks</Text>
+        <Text style={commonStyles.displayHeading}>Your Tasks Today</Text>
 
         <List.Item
           style={commonStyles.taskListItem}
