@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Image,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
-import { Button, TextInput, Avatar } from 'react-native-paper';
+import { Button, Avatar } from 'react-native-paper';
 import { useProfile } from '../../hoc/ProfileContext';
-import commonStyles from '../../../theme/commonStyles';
 import Container from '../../common/Container';
 import { DEFAULT_AVATAR_IMAGE } from '../../../utils/api/constants';
 

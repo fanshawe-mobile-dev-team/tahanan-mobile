@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   senderText: {},
 });
 
-function HomeRequests({ homeRequests, navigation }) {
+function HomeRequests({ homeRequests }) {
   const handleSelect = () => {
     console.log('HOME REQUEST SELECTED');
   };

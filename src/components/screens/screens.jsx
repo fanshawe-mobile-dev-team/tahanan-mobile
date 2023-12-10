@@ -22,7 +22,7 @@ export default [
   { name: 'JoinHome', component: JoinHomeScreen, options: { headerShown: false } },
   { name: 'Main', component: MainScreen, options: { headerShown: false } },
   { name: 'TaskList', component: TaskListScreen },
-  { name: 'Task', component: TaskScreen, options: { title: 'Sweep Floor' } },
+  { name: 'Task', component: TaskScreen, options: ({ route }) => ({ title: route.params.task.name }) },
   { name: 'CreateTask', component: CreateTaskScreen },
   { name: 'AssignTask', component: AssignTaskScreen },
   { name: 'Profile', component: ProfileScreen },
