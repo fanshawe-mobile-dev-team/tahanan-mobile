@@ -15,6 +15,11 @@ const commonStyles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 20,
   },
+  displayHeading2: {
+    fontWeight: 'bold',
+    marginVertical: 10,
+    fontSize: 20,
+  },
   displaySubheading: {
     marginBottom: 28,
   },

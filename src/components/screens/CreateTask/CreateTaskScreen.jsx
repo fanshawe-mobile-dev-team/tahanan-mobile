@@ -1,59 +1,49 @@
 import React, { useRef, useState, useEffect } from 'react';
 import {
-  View, Text,
+  View, Text, Alert, TouchableOpacity,
 } from 'react-native';
-import { Button, TextInput } from 'react-native-paper';
+import { Button, TextInput, List } from 'react-native-paper';
 import { DatePickerInput } from 'react-native-paper-dates';
-// import colors from '../../../theme/colors';
+import moment from 'moment';
+import colors from '../../../theme/colors';
 import commonStyles from '../../../theme/commonStyles';
 import Container from '../../common/Container';
+import { useProfile } from '../../hoc/ProfileContext';
+import { createTask } from '../../../utils/api/taskApi';
 
 function CreateTaskScreen({ navigation }) {
-  // const [taskId, setTaskId] = useState();
-  const [creatorId, setCreatorId] = useState('testUser');
-  const [userIds, setUserIds] = useState([]);
-  const [homeId, setHomeId] = useState('homeId');
+  const { profile } = useProfile();
+  console.log(profile);
+
+  const [assignedUser, setAssignedUser] = useState([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [createdAt, setCreatedAt] = useState(new Date());
-  const [dueAt, setDueAt] = useState();
-  const [isCompleted, setIsCompleted] = useState(false);
+  const [dueDate, setDueDate] = useState();
 
-  const userIdRef = useRef();
+  // const userIdRef = useRef();
   const descriptionRef = useRef();
-  const dueAtRef = useRef();
-
-  // TODO: set current date to task
-  // Set Current Date to Task
-  useEffect(() => {
-    setCreatedAt(new Date());
-  }, []);
-
-  // TODO: set assigned users to task
-  // Assign Users to Task
-  const addUser = (userId) => {
-    setUserIds((prevUserIds) => [...prevUserIds, userId]);
-  };
+  const dueDateRef = useRef();
 
   // TODO: Handle submit function
   const handleSubmit = async () => {
-    const input = {
-      creatorId,
-      userIds,
-      homeId,
-      name,
-      description,
-      createdAt,
-      dueAt,
-      isCompleted,
-    };
-
-    // const task = await createTask(input);
-    // console.log('CREATE TASK INPUT', user);
-
-    //
-    navigation.navigate('TaskList');
+    try {
+      const input = {
+        creatorId: profile.username,
+        homeId: profile.homeId,
+        name,
+        description,
+        assignedUser,
+        dueDate: moment(dueDate).format('YYYY-MM-DD'),
+      };
+      console.log(input);
+      await createTask(input);
+      navigation.navigate('TaskList');
+    } catch (error) {
+      Alert.alert('Unsuccessful', error.message);
+    }
   };
+
+  console.log('XXX ASIGNED USER', assignedUser);
 
   return (
     <Container>
@@ -77,26 +67,46 @@ function CreateTaskScreen({ navigation }) {
           placeholder="Enter your task description"
           value={description}
           onChangeText={setDescription}
-          onSubmitEditing={() => userIdRef.current.focus()}
-        />
-        <TextInput
-          ref={userIdRef}
-          style={commonStyles.commonInput}
-          label="Assigned Member/s"
-          placeholder="Enter username to assign"
-          // TODO: correct this
-          // value={userIds}
-          // onChangeText={setUserIds}
-          onSubmitEditing={() => dueAtRef.current.focus()}
+          onSubmitEditing={() => dueDateRef.current.focus()}
         />
         <DatePickerInput
+          ref={dueDateRef}
           locale="en"
           label="Due Date"
-          value={dueAt}
-          onChange={(d) => setDueAt(d)}
+          value={dueDate}
+          onChange={(d) => setDueDate(d)}
           inputMode="start"
         />
+        <Text style={commonStyles.displayHeading2}>Assign Task to:</Text>
+        {profile.home.users.map((username) => {
+          const isActive = assignedUser === username;
 
+          return (
+            <TouchableOpacity
+              key={username}
+              activeOpacity={0.2}
+              onPress={() => setAssignedUser(username)}
+            >
+              <List.Item
+                style={[commonStyles.taskListItem,
+                  {
+                    backgroundColor: isActive
+                      ? colors.primary.main
+                      : colors.primary.light60,
+                  }]}
+                title={username}
+                titleStyle={{ color: isActive ? '#fff' : '#000' }}
+                right={(props) => (
+                  <List.Icon
+                    {...props}
+                    icon={isActive ? 'checkbox-marked' : 'checkbox-blank-outline'}
+                    color={isActive ? '#fff' : '#000'}
+                  />
+                )}
+              />
+            </TouchableOpacity>
+          );
+        })}
         <View style={commonStyles.buttonContainer}>
           <Button mode="contained" onPress={handleSubmit}>Add Task</Button>
 
