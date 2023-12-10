@@ -1,10 +1,12 @@
+/* eslint-disable react/style-prop-object */
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StatusBar } from 'react-native';
 import React, { useRef } from 'react';
+import { StatusBar } from 'expo-status-bar';
 import screens from './src/components/screens/screens';
 import defaultTheme from './src/theme/defaultTheme';
 import { ProfileProvider } from './src/components/hoc/ProfileContext';
+import colors from './src/theme/colors';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,7 +26,7 @@ export default function App() {
             />
           ))}
         </Stack.Navigator>
-        <StatusBar />
+        <StatusBar animated style="light" backgroundColor={colors.primary.main} />
       </NavigationContainer>
     </ProfileProvider>
   );
