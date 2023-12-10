@@ -35,7 +35,7 @@ function CreateTaskScreen({ navigation }) {
     try {
       const input = {
         creatorId: profile.username,
-        homeId: profile.homeId,
+        homeId: profile.home.name,
         name,
         description,
         assignedUser,

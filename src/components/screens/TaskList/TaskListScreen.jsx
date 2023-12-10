@@ -8,7 +8,6 @@ import {
   List,
   Surface,
   Icon,
-  Tooltip,
 } from 'react-native-paper';
 import { DatePickerModal } from 'react-native-paper-dates';
 import { useIsFocused } from '@react-navigation/native';
@@ -47,7 +46,7 @@ function TaskListScreen() {
 
   const fetchTaskList = async () => {
     const query = {
-      homeId: home.id,
+      homeId: home.name,
       date: moment(date).format(API_DATE_FORMAT),
     };
     const tasksData = await fetchHomeTasks(query);
@@ -59,34 +58,32 @@ function TaskListScreen() {
     if (isFocused) {
       fetchTaskList();
     }
-  }, [isFocused]);
+  }, [isFocused, date]);
 
   return (
     <Container>
       <TouchableOpacity onPress={() => setOpen(true)}>
-        <Tooltip title="Click to hange the date">
-          <Surface style={commonStyles.commonSurface} elevation={4}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={commonStyles.dashbDate2}>
-                {formattedDate}
-              </Text>
-              <Icon
-                source="calendar"
-                color={colors.primary.main}
-                size={30}
-              />
+        <Surface style={commonStyles.commonSurface} elevation={4}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={commonStyles.dashbDate2}>
+              {formattedDate}
+            </Text>
+            <Icon
+              source="calendar"
+              color={colors.primary.main}
+              size={30}
+            />
 
-              <DatePickerModal
-                locale="en"
-                mode="single"
-                visible={open}
-                onDismiss={onDismissSingle}
-                date={date}
-                onConfirm={onConfirmSingle}
-              />
-            </View>
-          </Surface>
-        </Tooltip>
+            <DatePickerModal
+              // locale="en"
+              mode="single"
+              visible={open}
+              onDismiss={onDismissSingle}
+              date={date}
+              onConfirm={onConfirmSingle}
+            />
+          </View>
+        </Surface>
       </TouchableOpacity>
 
       <List.Section style={{ marginTop: 24 }}>
