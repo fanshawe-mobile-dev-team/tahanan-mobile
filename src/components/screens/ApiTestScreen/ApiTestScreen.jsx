@@ -5,6 +5,9 @@ import {
   fetchHomeRequests,
 } from '../../../utils/api/homeApi';
 import commonStyles from '../../../theme/commonStyles';
+import {
+  createTask, deleteTask, fetchTask, updateTask,
+} from '../../../utils/api/taskApi';
 
 function ApiTestScreen() {
   const testApi = async () => {
@@ -51,8 +54,34 @@ function ApiTestScreen() {
 
     // await acceptHomeRequest('home1-testUser2');
 
-    const res = await fetchHomeRequests('home1');
-    console.log('TEST RES', res);
+    // const res = await fetchHomeRequests('home1');
+
+    // const input = {
+    //   creatorId: 'testUser',
+    //   homeId: 'home1',
+    //   name: 'Sweep floor',
+    //   description: 'Sweep floor of the whole house',
+    //   assignedUser: 'user1',
+    //   dueDate: '2022-12-9',
+    // };
+
+    // const res = await createTask(input);
+
+    // const res = await fetchTask('0COX8HmUCfyeD9ezI8tj');
+
+    // const input = {
+    //   taskId: '0COX8HmUCfyeD9ezI8tj',
+    //   name: 'Wipe windows',
+    //   description: 'Wipe all the windows',
+    //   assignedUser: 'testUser2',
+    //   isCompleted: true,
+    // };
+
+    // const res = await updateTask(input);
+
+    await deleteTask('0COX8HmUCfyeD9ezI8tj');
+
+    // console.log('TEST RES', res);
   };
 
   return (

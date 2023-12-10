@@ -25,13 +25,16 @@ export const createHome = async (input) => {
   try {
     // Check for existing username and email
     const homeRef = doc(db, 'homes', name);
+    const userRef = doc(db, 'users', ownerId);
+
     const homeSnapshot = await getDoc(homeRef);
+
     if (homeSnapshot.exists()) {
       throw new Error('Home name already already taken');
     }
 
-    await setDoc(doc(db, 'homes', name), { ...input, users: [ownerId] });
-    await setDoc(doc(db, 'users', ownerId), { homeId: name }, { merge: true });
+    await setDoc(homeRef, { ...input, users: [ownerId] });
+    await setDoc(userRef, { homeId: name }, { merge: true });
 
     const newHome = (await getDoc(homeRef)).data();
 

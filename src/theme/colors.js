@@ -29,7 +29,7 @@ const colors = {
     main: '#BA1A1A',
   },
   background: {
-    light: '#fff',
+    light: '#f8f8f8',
     dark: '#000',
   },
 };
