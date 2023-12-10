@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  View, Text, Alert, TouchableOpacity,
+  View, Text, Alert, TouchableOpacity, StyleSheet,
 } from 'react-native';
 import { Button, TextInput, List } from 'react-native-paper';
 import { DatePickerInput } from 'react-native-paper-dates';
@@ -11,6 +11,12 @@ import commonStyles from '../../../theme/commonStyles';
 import Container from '../../common/Container';
 import { useProfile } from '../../hoc/ProfileContext';
 import { createTask } from '../../../utils/api/taskApi';
+
+const styles = StyleSheet.create({
+  form: {
+    marginBottom: 20,
+  },
+});
 
 function CreateTaskScreen({ navigation }) {
   const { profile } = useProfile();
@@ -60,7 +66,7 @@ function CreateTaskScreen({ navigation }) {
       <Text style={commonStyles.displaySubheading}>
         Enter the following information to create a task
       </Text>
-      <View>
+      <View style={styles.form}>
         <TextInput
           style={commonStyles.commonInput}
           label="Task"
@@ -86,6 +92,8 @@ function CreateTaskScreen({ navigation }) {
           onChange={(d) => setDueDate(d)}
           inputMode="start"
         />
+      </View>
+      <View style={styles.form}>
         <Text style={commonStyles.displayHeading2}>Assign Task to:</Text>
         {profile.home.users.map((username) => {
           const isActive = assignedUser === username;
@@ -116,12 +124,9 @@ function CreateTaskScreen({ navigation }) {
             </TouchableOpacity>
           );
         })}
-        <View style={commonStyles.buttonContainer}>
-          <Button mode="contained" onPress={handleSubmit}>Add Task</Button>
-
-          <Button mode="contained" buttonColor="#777680" style={commonStyles.greyButton} onPress={() => navigation.navigate('TaskList')}>Cancel</Button>
-        </View>
       </View>
+      <Button mode="contained" onPress={handleSubmit}>Add Task</Button>
+      <Button mode="contained" buttonColor="#777680" style={commonStyles.greyButton} onPress={() => navigation.navigate('TaskList')}>Cancel</Button>
     </Container>
   );
 }

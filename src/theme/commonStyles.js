@@ -7,7 +7,8 @@ const commonStyles = StyleSheet.create({
   },
   screenContainer: {
     paddingHorizontal: 16,
-    paddingVertical: 32,
+    paddingTop: 50,
+    paddingBottom: 24,
     flex: 1,
   },
   displayHeading: {
@@ -29,9 +30,6 @@ const commonStyles = StyleSheet.create({
   greyButton: {
     backgroundColor: '#777680',
     marginVertical: 12,
-  },
-  buttonContainer: {
-    marginVertical: 26,
   },
   commonTitle: {
     fontWeight: 'bold',
