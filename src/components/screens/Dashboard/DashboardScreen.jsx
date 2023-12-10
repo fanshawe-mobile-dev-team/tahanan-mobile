@@ -63,19 +63,19 @@ function DashboardScreen() {
     }
   }, [isFocused]);
 
-  const incompleteTasks = tasks.filter((task) => !task.isCompleted).length;
+  const unfinishedTasks = tasks.filter((task) => !task.isCompleted).length;
 
   let todayMessage;
 
-  switch (incompleteTasks) {
+  switch (unfinishedTasks) {
     case 0:
       todayMessage = 'You have completed all your tasks today. Good job!';
       break;
     case 1:
-      todayMessage = 'You have 1 incomplete task today.';
+      todayMessage = 'You have 1 unfinished task today.';
       break;
     default:
-      todayMessage = `You have ${incompleteTasks} incomplete task today.`;
+      todayMessage = `You have ${unfinishedTasks} unfinished task today.`;
       break;
   }
 

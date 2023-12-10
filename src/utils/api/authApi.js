@@ -72,3 +72,11 @@ export const registerUser = async (input) => {
     throw new Error(messageOutput);
   }
 };
+
+export const fetchUser = async (username) => {
+  const userRef = doc(db, 'users', username);
+
+  const user = await getDoc(userRef);
+
+  return { ...user.data(), id: username };
+};

@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
+  Alert,
   StyleSheet, Text, View,
 } from 'react-native';
 import { Button, Avatar } from 'react-native-paper';
 import moment from 'moment';
+import { BottomSheet, ListItem } from '@rneui/themed';
+import * as SMS from 'expo-sms';
+import * as MailComposer from 'expo-mail-composer';
 import commonStyles from '../../../theme/commonStyles';
 import { updateTask } from '../../../utils/api/taskApi';
 import colors from '../../../theme/colors';
 import Container from '../../common/Container';
 import { DEFAULT_DATE_DISPLAY_FORMAT } from '../../../utils/api/constants';
+import { useProfile } from '../../hoc/ProfileContext';
+import { fetchUser } from '../../../utils/api/authApi';
 
 const styles = StyleSheet.create({
   container: {
@@ -49,11 +55,17 @@ const styles = StyleSheet.create({
   status: {
     fontWeight: 'bold',
   },
+  actions: {
+    gap: 10,
+  },
 });
 
 function TaskScreen({ route }) {
   const [task, setTask] = useState(route.params.task);
   const [loading, setLoading] = useState(false);
+  const { profile } = useProfile();
+  const [showDrawer, setShowDrawer] = useState(false);
+  const [user, setUser] = useState();
 
   const handleToggleComplete = async (isCompleted) => {
     setLoading(true);
@@ -70,8 +82,58 @@ function TaskScreen({ route }) {
   };
 
   const {
-    dueDate, description, assignedUser, isCompleted,
+    dueDate, description, assignedUser, isCompleted, name,
   } = task;
+
+  const sendAlert = () => Alert.alert('Success', 'Your email has been sent successfully', [
+    { text: 'Okay' },
+  ]);
+
+  const handleRemindSMS = async () => {
+    const isAvailable = await SMS.isAvailableAsync();
+    if (isAvailable) {
+      await SMS.sendSMSAsync(
+        [user.phone],
+        `Hi ${user.firstName}, just reminding you about your ${name} task due ${moment(dueDate).format(DEFAULT_DATE_DISPLAY_FORMAT)}`,
+      );
+    } else {
+      Alert.alert('Permissions Required', 'Please give Tahanan permission to send SMS.');
+    }
+  };
+
+  const handleRemindEmail = async () => {
+    const options = {
+      recipients: [user.email],
+      subject: `Tahanan Task Reminder: ${name}`,
+      body: `Hi ${user.firstName},\nJust reminding you about your ${name} task due ${moment(dueDate).format(DEFAULT_DATE_DISPLAY_FORMAT)}`,
+      isHtml: false,
+    };
+
+    MailComposer.composeAsync(options).then(() => sendAlert());
+  };
+
+  const isOwner = profile.username === task.assignedUser;
+
+  const list = [
+    { title: 'SMS', onPress: handleRemindSMS },
+    { title: 'Email', onPress: handleRemindEmail },
+    {
+      title: 'Cancel',
+      containerStyle: { backgroundColor: colors.secondary.main },
+      titleStyle: { color: 'white' },
+      onPress: () => setShowDrawer(false),
+    },
+  ];
+
+  const getUser = async () => {
+    const userData = await fetchUser(task.assignedUser);
+
+    setUser(userData);
+  };
+
+  useEffect(() => {
+    getUser();
+  }, [task]);
 
   return (
     <Container>
@@ -103,9 +165,34 @@ function TaskScreen({ route }) {
           onPress={() => handleToggleComplete(!isCompleted)}
         >
           {isCompleted ? 'Mark as Incomplete' : 'Mark as Complete'}
-
         </Button>
+        {!isOwner && (
+          <Button
+            mode="outlined"
+            onPress={() => setShowDrawer(true)}
+          >
+              {`Remind ${assignedUser}`}
+          </Button>
+        )}
       </View>
+      <BottomSheet
+        modalProps={{}}
+        isVisible={showDrawer}
+        onBackdropPress={() => setShowDrawer(false)}
+        containerStyle={{ backgroundColor: 'transparent' }}
+      >
+        {list.map((l) => (
+          <ListItem
+            key={l.title}
+            containerStyle={l.containerStyle}
+            onPress={l.onPress}
+          >
+            <ListItem.Content>
+              <ListItem.Title style={l.titleStyle}>{l.title}</ListItem.Title>
+            </ListItem.Content>
+          </ListItem>
+        ))}
+      </BottomSheet>
     </Container>
   );
 }
