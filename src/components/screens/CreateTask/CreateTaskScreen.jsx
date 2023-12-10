@@ -1,10 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View, Text, Alert, TouchableOpacity,
 } from 'react-native';
 import { Button, TextInput, List } from 'react-native-paper';
 import { DatePickerInput } from 'react-native-paper-dates';
 import moment from 'moment';
+import { useIsFocused } from '@react-navigation/native';
 import colors from '../../../theme/colors';
 import commonStyles from '../../../theme/commonStyles';
 import Container from '../../common/Container';
@@ -13,7 +14,6 @@ import { createTask } from '../../../utils/api/taskApi';
 
 function CreateTaskScreen({ navigation }) {
   const { profile } = useProfile();
-  console.log(profile);
 
   const [assignedUser, setAssignedUser] = useState([]);
   const [name, setName] = useState('');
@@ -43,7 +43,16 @@ function CreateTaskScreen({ navigation }) {
     }
   };
 
-  console.log('XXX ASIGNED USER', assignedUser);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (isFocused) {
+      setAssignedUser('');
+      setName('');
+      setDescription('');
+      setDueDate('');
+    }
+  }, [isFocused]);
 
   return (
     <Container>
