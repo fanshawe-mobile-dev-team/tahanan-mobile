@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Image,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
-import { Button, TextInput } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import { useProfile } from '../../hoc/ProfileContext';
-import commonStyles from '../../../theme/commonStyles';
 import Container from '../../common/Container';
 
 const styles = StyleSheet.create({

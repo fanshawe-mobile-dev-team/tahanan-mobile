@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
-  Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TouchableOpacity, View,
+  StyleSheet, Text, View,
 } from 'react-native';
-import { Button, Avatar, ActivityIndicator } from 'react-native-paper';
+import { Button, Avatar } from 'react-native-paper';
 import moment from 'moment';
 import commonStyles from '../../../theme/commonStyles';
-import { fetchTask, updateTask } from '../../../utils/api/taskApi';
+import { updateTask } from '../../../utils/api/taskApi';
 import colors from '../../../theme/colors';
 import Container from '../../common/Container';
 import { DEFAULT_DATE_DISPLAY_FORMAT } from '../../../utils/api/constants';
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function TaskScreen({ navigation, route }) {
+function TaskScreen({ route }) {
   const [task, setTask] = useState(route.params.task);
   const [loading, setLoading] = useState(false);
 

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import {
-  Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TouchableOpacity, View,
+  Image, StyleSheet, Text, TouchableOpacity, View,
 } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import colors from '../../../theme/colors';

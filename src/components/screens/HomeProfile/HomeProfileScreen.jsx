@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import {
-  Avatar, Button, Divider, IconButton,
+  Avatar, Divider, IconButton,
 } from 'react-native-paper';
 import commonStyles from '../../../theme/commonStyles';
 import Container from '../../common/Container';

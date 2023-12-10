@@ -1,13 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { Button } from 'react-native-paper';
-import {
-  fetchHomeRequests,
-} from '../../../utils/api/homeApi';
 import commonStyles from '../../../theme/commonStyles';
-import {
-  createTask, deleteTask, fetchHomeTasks, fetchTask, fetchUserTasks, updateTask,
-} from '../../../utils/api/taskApi';
 
 function ApiTestScreen() {
   const testApi = async () => {
