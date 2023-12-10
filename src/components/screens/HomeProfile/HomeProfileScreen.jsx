@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import {
-  Avatar, Button, Divider, IconButton,
+  Avatar, Chip, Divider, IconButton,
 } from 'react-native-paper';
 import commonStyles from '../../../theme/commonStyles';
 import Container from '../../common/Container';
@@ -16,6 +16,7 @@ import { useProfile } from '../../hoc/ProfileContext';
 import { acceptHomeRequest, cancelHomeRequest, fetchHomeRequests } from '../../../utils/api/homeApi';
 import { DEFAULT_AVATAR_IMAGE } from '../../../utils/api/constants';
 import colors from '../../../theme/colors';
+import home2 from '../../../../assets/home2.jpg';
 
 const styles = StyleSheet.create({
   container: {
@@ -26,6 +27,7 @@ const styles = StyleSheet.create({
   },
   image: {
     height: 120,
+    width: '100%',
     borderRadius: 24,
   },
   actions: {
@@ -43,9 +45,26 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: 24,
   },
+  homeName: {
+    fontWeight: 'bold',
+    marginBottom: 6,
+    fontSize: 24,
+    textAlign: 'center',
+  },
+  user: {
+    marginBottom: 12,
+    fontSize: 24,
+    textAlign: 'center',
+  },
+  description: {
+    marginVertical: 12,
+    fontSize: 16,
+    textAlign: 'center',
+    fontStyle: 'italic',
+  },
   subHeading: {
     fontWeight: 'bold',
-    marginVertical: 8,
+    marginVertical: 12,
     textAlign: 'left',
     fontSize: 20,
   },
@@ -64,6 +83,9 @@ const styles = StyleSheet.create({
   },
   homeRequestActions: {
     flexDirection: 'row',
+  },
+  userList: {
+    marginVertical: 6,
   },
 });
 
@@ -111,22 +133,26 @@ function HomeProfileScreen() {
   return (
     <Container>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: 'https://picsum.photos/600' }} style={styles.image} />
+        <Image source={home2} style={styles.image} />
       </View>
-      <Text style={styles.title}>
+      <Text style={styles.homeName}>
         {home.name}
       </Text>
-      <Text style={commonStyles.displaySubheading}>
-        {`by ${home.ownerId}`}
+      <Text style={styles.user}>
+        <Text>by </Text>
+        <Text style={{ color: colors.tertiary.main, fontWeight: 'bold' }}>{home.ownerId}</Text>
       </Text>
-      <Text style={commonStyles.displaySubheading}>
+      <Text style={styles.description}>
         {home.description}
       </Text>
       <Divider />
       <Text style={styles.subHeading}>
         Home Members:
       </Text>
-      {home.users?.map((user) => <Text key={user}>{user}</Text>)}
+      {home.users?.map((user) => (
+        <Chip icon="user" key={user} style={styles.userList}>{user}</Chip>
+      ))}
+
       {isOwner && homeRequests?.length
         ? (
           <>
