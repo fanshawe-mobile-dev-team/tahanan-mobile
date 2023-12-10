@@ -84,8 +84,9 @@ function CreateTaskScreen({ navigation }) {
           style={commonStyles.commonInput}
           label="Assigned Member/s"
           placeholder="Enter username to assign"
-          value={userIds}
-          onChangeText={setUserIds}
+          // TODO: correct this
+          // value={userIds}
+          // onChangeText={setUserIds}
           onSubmitEditing={() => dueAtRef.current.focus()}
         />
         <DatePickerInput
@@ -99,7 +100,7 @@ function CreateTaskScreen({ navigation }) {
         <View style={commonStyles.buttonContainer}>
           <Button mode="contained" onPress={handleSubmit}>Add Task</Button>
 
-          <Button mode="contained" style={commonStyles.greyButton} onPress={navigation.navigate('TaskList')}>Cancel</Button>
+          <Button mode="contained" buttonColor="#777680" style={commonStyles.greyButton} onPress={() => navigation.navigate('TaskList')}>Cancel</Button>
         </View>
       </View>
     </Container>

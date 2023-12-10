@@ -24,13 +24,22 @@ export function ProfileProvider({ children }) {
     });
   };
 
+  const reloadHome = async () => {
+    const newHome = await fetchHome(profile.home.name);
+
+    setProfile({
+      ...profile,
+      home: newHome,
+    });
+  };
+
   const logout = () => {
     // Perform the logout logic and update the profile state
     setProfile(null);
   };
 
   const state = useMemo(() => ({
-    profile, login, logout, setHome,
+    profile, login, logout, setHome, reloadHome,
   }), [profile]);
 
   return (

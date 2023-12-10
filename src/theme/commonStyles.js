@@ -22,7 +22,6 @@ const commonStyles = StyleSheet.create({
     marginBottom: 20,
   },
   greyButton: {
-    buttonColor: '#777680',
     backgroundColor: '#777680',
     marginVertical: 12,
   },

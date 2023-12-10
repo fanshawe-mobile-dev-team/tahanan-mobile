@@ -1,7 +1,8 @@
 import {
+  arrayUnion,
   collection,
   deleteDoc,
-  doc, getDoc, getDocs, query, setDoc, where,
+  doc, getDoc, getDocs, query, setDoc, updateDoc, where,
 } from 'firebase/firestore';
 import { db } from './firebaseConfig';
 
@@ -119,6 +120,9 @@ export const acceptHomeRequest = async (homeRequestId) => {
     const homeRequest = homeRequestSnapshot.data();
 
     await setDoc(doc(db, 'users', homeRequest.userId), { homeId: homeRequest.homeId }, { merge: true });
+    await updateDoc(doc(db, 'homes', homeRequest.homeId), {
+      users: arrayUnion(homeRequest.userId),
+    });
 
     await deleteDoc(homeRequestRef);
   } catch ({ message }) {
@@ -131,9 +135,39 @@ export const fetchHomeRequests = async (homeId) => {
     const requestsQry = query(homeRequestsCollection, where('homeId', '==', homeId));
     const requestsSnapshots = await getDocs(requestsQry);
 
-    const requests = requestsSnapshots.docs.map((request) => request.data());
+    // eslint-disable-next-line max-len
+    const requests = requestsSnapshots.docs.map((request) => ({ ...request.data(), id: request.id }));
 
     return requests;
+  } catch ({ message }) {
+    throw new Error(message);
+  }
+};
+
+export const fetchUserRequest = async (userId) => {
+  try {
+    const requestsQry = query(homeRequestsCollection, where('userId', '==', userId));
+    const requestsSnapshots = await getDocs(requestsQry);
+
+    const request = requestsSnapshots.docs[0]?.data();
+
+    if (!request) {
+      return null;
+    }
+
+    request.id = requestsSnapshots.docs[0].id;
+
+    return request;
+  } catch ({ message }) {
+    throw new Error(message);
+  }
+};
+
+export const cancelHomeRequest = async (homeRequestId) => {
+  try {
+    const homeRequestRef = doc(db, 'homeRequests', homeRequestId);
+
+    await deleteDoc(homeRequestRef);
   } catch ({ message }) {
     throw new Error(message);
   }

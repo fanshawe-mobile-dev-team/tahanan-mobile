@@ -12,15 +12,13 @@ import {
 import commonStyles from '../../../theme/commonStyles';
 import Container from '../../common/Container';
 import { useProfile } from '../../hoc/ProfileContext';
-
-// const BOTTOM_APPBAR_HEIGHT = 80;
-// const MEDIUM_FAB_HEIGHT = 56;
-
-const DEFAULT_AVATAR_IMAGE = require('../../../../assets/placeholder-avatar.png');
+import { DEFAULT_AVATAR_IMAGE } from '../../../utils/api/constants';
 
 // TODO:Set username in hello and number of tasks
 function DashboardScreen() {
   const { profile } = useProfile();
+
+  console.log(profile);
 
   const currentDate = new Date();
   const formattedDate = currentDate.toDateString();

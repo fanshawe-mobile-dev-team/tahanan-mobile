@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View,
 } from 'react-native';
 import { Button } from 'react-native-paper';
-import { sendHomeRequest } from '../../../utils/api/homeApi';
+import commonStyles from '../../../theme/commonStyles';
+import { cancelHomeRequest, sendHomeRequest } from '../../../utils/api/homeApi';
 import { useProfile } from '../../hoc/ProfileContext';
 import commonStyles from '../../../theme/commonStyles';
+import colors from '../../../theme/colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,8 +21,18 @@ const styles = StyleSheet.create({
     aspectRatio: 3 / 2,
     borderRadius: 24,
   },
+  actions: {
+    gap: 10,
+  },
   actionSeparator: {
     marginVertical: 12,
+    textAlign: 'center',
+  },
+  activeRequestContainer: {
+    height: 32,
+  },
+  activeRequestText: {
+    color: colors.outline.main,
     textAlign: 'center',
   },
 });
@@ -32,8 +44,10 @@ function JoinHomeScreen({ navigation, route }) {
       ownerId,
       description,
     },
+    hasActiveRequest,
   } = route.params;
   const { profile: { username } } = useProfile();
+  const [showCancel, setShowCancel] = useState(hasActiveRequest);
 
   const handleJoin = async () => {
     try {
@@ -44,7 +58,17 @@ function JoinHomeScreen({ navigation, route }) {
       };
 
       await sendHomeRequest(input);
-      navigation.navigate('PostRegister');
+      setShowCancel(true);
+    } catch ({ message }) {
+      Alert.alert('Request Failed', message);
+    }
+  };
+
+  const handleCancel = async () => {
+    console.log('CANCEL');
+    try {
+      await cancelHomeRequest(`${name}-${username}`);
+      setShowCancel(false);
     } catch ({ message }) {
       Alert.alert('Request Failed', message);
     }
@@ -65,8 +89,20 @@ function JoinHomeScreen({ navigation, route }) {
         <Text style={commonStyles.displaySubheading}>
           {description}
         </Text>
+        <View style={[styles.activeRequestContainer, { opacity: showCancel ? 1 : 0 }]}>
+          <Text style={styles.activeRequestText}>
+            You have an active request to join this home.
+          </Text>
+        </View>
         <View style={styles.actions}>
-          <Button mode="contained" onPress={handleJoin}>Join this Home</Button>
+          {showCancel
+            ? <Button mode="contained" buttonColor={colors.error.main} onPress={handleCancel}>Cancel Request</Button>
+            : (
+              <>
+                <Button mode="contained" onPress={handleJoin}>Join this Home</Button>
+                <Button mode="contained-tonal" onPress={() => navigation.navigate('PostRegister')}>Find another home</Button>
+              </>
+            )}
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
