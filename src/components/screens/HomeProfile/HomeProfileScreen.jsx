@@ -88,7 +88,6 @@ function HomeProfileScreen() {
   const isOwner = home.ownerId === profile.username;
 
   const handleAcceptHomeRequest = async (id) => {
-    console.log('ACCEPT REQUEST', id);
     try {
       await acceptHomeRequest(id);
 
@@ -100,7 +99,6 @@ function HomeProfileScreen() {
   };
 
   const handleRejectHomeRequest = async (id) => {
-    console.log('CANCEL REQUEST', id);
     try {
       await cancelHomeRequest(id);
 
@@ -109,8 +107,6 @@ function HomeProfileScreen() {
       Alert.alert('Failed to Reject Request', message);
     }
   };
-
-  console.log(homeRequests);
 
   return (
     <Container>
