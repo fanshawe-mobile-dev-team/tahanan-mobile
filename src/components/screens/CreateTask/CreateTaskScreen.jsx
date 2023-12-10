@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  View, Text, Alert, TouchableOpacity, StyleSheet,
+  View, Text, Alert, TouchableOpacity, StyleSheet, Platform,
 } from 'react-native';
 import { Button, TextInput, List } from 'react-native-paper';
-import { DatePickerInput } from 'react-native-paper-dates';
 import moment from 'moment';
 import { useIsFocused } from '@react-navigation/native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import colors from '../../../theme/colors';
 import commonStyles from '../../../theme/commonStyles';
 import Container from '../../common/Container';
@@ -24,7 +24,8 @@ function CreateTaskScreen({ navigation }) {
   const [assignedUser, setAssignedUser] = useState([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [dueDate, setDueDate] = useState();
+  const [dueDate, setDueDate] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
 
   // const userIdRef = useRef();
   const descriptionRef = useRef();
@@ -55,9 +56,19 @@ function CreateTaskScreen({ navigation }) {
       setAssignedUser('');
       setName('');
       setDescription('');
-      setDueDate('');
+      setDueDate(new Date());
     }
   }, [isFocused]);
+
+  const onDateChange = (event, selectedDate) => {
+    const currentDate = selectedDate || dueDate;
+    setShowPicker(Platform.OS === 'ios');
+    setDueDate(currentDate);
+  };
+
+  const showDatePicker = () => {
+    setShowPicker(true);
+  };
 
   return (
     <Container>
@@ -83,13 +94,13 @@ function CreateTaskScreen({ navigation }) {
           onChangeText={setDescription}
           onSubmitEditing={() => dueDateRef.current.focus()}
         />
-        <DatePickerInput
+        <TextInput
           ref={dueDateRef}
-          locale="en"
-          label="Due Date"
-          value={dueDate}
-          onChange={(d) => setDueDate(d)}
-          inputMode="start"
+          style={commonStyles.commonInput}
+          label="Date"
+          placeholder="Enter your task description"
+          value={moment(dueDate).format('MMMM DD, YYYY')}
+          onFocus={showDatePicker}
         />
       </View>
       <View style={styles.form}>
@@ -126,6 +137,14 @@ function CreateTaskScreen({ navigation }) {
       </View>
       <Button mode="contained" onPress={handleSubmit}>Add Task</Button>
       <Button mode="contained" buttonColor="#777680" style={commonStyles.greyButton} onPress={() => navigation.navigate('TaskList')}>Cancel</Button>
+      {showPicker && (
+      <DateTimePicker
+        value={dueDate}
+        mode="date"
+        display="spinner"
+        onChange={onDateChange}
+      />
+      )}
     </Container>
   );
 }
