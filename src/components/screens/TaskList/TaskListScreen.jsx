@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Text,
   TouchableOpacity,
@@ -11,65 +11,55 @@ import {
   Tooltip,
 } from 'react-native-paper';
 import { DatePickerModal } from 'react-native-paper-dates';
+import { useIsFocused } from '@react-navigation/native';
+import moment from 'moment';
 import commonStyles from '../../../theme/commonStyles';
 import Container from '../../common/Container';
 import colors from '../../../theme/colors';
+import TaskItem from '../../common/TaskItem';
+import { fetchHomeTasks } from '../../../utils/api/taskApi';
+import { useProfile } from '../../hoc/ProfileContext';
+import { API_DATE_FORMAT } from '../../../utils/api/constants';
 
 function TaskListScreen() {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const formattedDate = currentDate.toDateString();
-  const [date, setDate] = React.useState(undefined);
-  const [open, setOpen] = React.useState(false);
+  const { profile } = useProfile();
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
+  const [tasks, setTasks] = useState([]);
 
-  const onDismissSingle = React.useCallback(() => {
+  const formattedDate = date.toDateString();
+
+  const { home } = profile;
+
+  const onDismissSingle = useCallback(() => {
     setOpen(false);
   }, [setOpen]);
 
-  const onConfirmSingle = React.useCallback(
+  const onConfirmSingle = useCallback(
     (params) => {
       setOpen(false);
       setDate(params.date);
-      setCurrentDate(params.date);
     },
-    [setOpen, setDate, setCurrentDate],
+    [setOpen, setDate],
   );
 
-  const openTaskHandler = async () => {
-    // TODO: create handler to open task
+  const isFocused = useIsFocused();
+
+  const fetchTaskList = async () => {
+    const query = {
+      homeId: home.id,
+      date: moment(date).format(API_DATE_FORMAT),
+    };
+    const tasksData = await fetchHomeTasks(query);
+
+    setTasks(tasksData);
   };
 
-  const sampleTasks = [
-    {
-      id: 1,
-      title: 'Vacuum Living Room',
-      description: 'Use the vacuum cleaner to thoroughly clean the carpets, corners, and under furniture in the living room. Pay special attention to high-traffic areas.',
-    },
-    {
-      id: 2,
-      title: 'Clean Bathroom',
-      description: "Scrub and sanitize all surfaces in the bathroom, including the toilet, sink, shower, and mirrors. Don't forget to replace used towels with fresh ones.",
-    },
-    {
-      id: 3,
-      title: 'Mop Kitchen Floor',
-      description: 'Mop the kitchen floor using a suitable cleaning solution. Pay attention to spills and stains. Move furniture if necessary to ensure thorough cleaning.',
-    },
-    {
-      id: 4,
-      title: 'Dust Furniture',
-      description: "Dust all surfaces of furniture in the house using a microfiber cloth. Don't forget shelves, tabletops, and decorative items. Wipe surfaces if needed.",
-    },
-    {
-      id: 5,
-      title: 'Empty Trash Bins',
-      description: 'Empty all trash bins in the house. Replace liners if necessary. Take the trash outside to the designated collection area.',
-    },
-    {
-      id: 6,
-      title: 'Organize Closet',
-      description: 'Sort through clothing and items in the closet. Organize and declutter by donating or disposing of items not needed. Arrange clothes neatly and categorize items.',
-    },
-  ];
+  useEffect(() => {
+    if (isFocused) {
+      fetchTaskList();
+    }
+  }, [isFocused]);
 
   return (
     <Container>
@@ -101,22 +91,7 @@ function TaskListScreen() {
 
       <List.Section style={{ marginTop: 24 }}>
         <Text style={commonStyles.displayHeading}>Tasks</Text>
-        {sampleTasks.map(({ id, title, description }) => (
-          <TouchableOpacity
-            key={id}
-            activeOpacity={0.2}
-            onPress={openTaskHandler}
-          >
-            <List.Item
-              style={commonStyles.taskListItem}
-              title={title}
-              description={description}
-              left={(props) => <List.Icon {...props} icon="radiobox-marked" />}
-              right={(props) => <List.Icon {...props} icon="open-in-new" />}
-            />
-          </TouchableOpacity>
-
-        ))}
+        {tasks.map((task) => <TaskItem key={task.id} task={task} showAssignee />)}
       </List.Section>
 
     </Container>

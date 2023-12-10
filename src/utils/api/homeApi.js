@@ -51,7 +51,7 @@ export const fetchHome = async (id) => {
 
   const home = await getDoc(homeRef);
 
-  return home.data();
+  return { ...home.data(), id };
 };
 
 export const updateHome = async (input) => {

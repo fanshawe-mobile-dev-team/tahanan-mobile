@@ -1,14 +1,28 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import {
+  StyleSheet, Text, TouchableOpacity, View,
+} from 'react-native';
 import { List } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import commonStyles from '../../theme/commonStyles';
+import colors from '../../theme/colors';
 
-function TaskItem({ task }) {
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  assignee: {
+    color: colors.primary.main,
+    fontWeight: 'bold',
+  },
+});
+
+function TaskItem({ task, showAssignee }) {
   const navigation = useNavigation();
 
   const {
-    description, name, isCompleted, id,
+    description, name, isCompleted, id, assignedUser,
   } = task;
 
   const handleClickTask = () => {
@@ -19,9 +33,15 @@ function TaskItem({ task }) {
     <TouchableOpacity key={id} onPress={() => handleClickTask(task)}>
       <List.Item
         style={commonStyles.taskListItem}
-        title={name}
+        titleStyle={{ marginBottom: 5 }}
+        title={(
+          <View>
+            <Text style={styles.title}>{name}</Text>
+            {showAssignee && <Text style={styles.assignee}>{assignedUser}</Text>}
+          </View>
+)}
         description={description}
-        left={(props) => (isCompleted ? (
+        right={(props) => (isCompleted ? (
           <List.Icon
             {...props}
             icon="checkbox-marked-circle-outline"

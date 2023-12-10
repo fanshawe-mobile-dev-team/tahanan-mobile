@@ -106,7 +106,6 @@ function DashboardScreen() {
       {tasks.length ? (
         <List.Section style={{ marginTop: 24 }}>
           <Text style={commonStyles.displayHeading}>Tasks</Text>
-
           {tasks.map((task) => <TaskItem key={task.id} task={task} />)}
         </List.Section>
       ) : (

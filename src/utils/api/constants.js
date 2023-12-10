@@ -6,3 +6,4 @@ export const BOTTOM_APPBAR_HEIGHT = 80;
 export const MEDIUM_FAB_HEIGHT = 56;
 
 export const DEFAULT_DATE_DISPLAY_FORMAT = 'MMMM DD, YYYY';
+export const API_DATE_FORMAT = 'YYYY-MM-DD';
