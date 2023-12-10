@@ -9,9 +9,7 @@ import {
 import {
   Avatar, Chip, Divider, IconButton,
 } from 'react-native-paper';
-import commonStyles from '../../../theme/commonStyles';
 import Container from '../../common/Container';
-// import colors from '../../../theme/colors';
 import { useProfile } from '../../hoc/ProfileContext';
 import { acceptHomeRequest, cancelHomeRequest, fetchHomeRequests } from '../../../utils/api/homeApi';
 import { DEFAULT_AVATAR_IMAGE } from '../../../utils/api/constants';
