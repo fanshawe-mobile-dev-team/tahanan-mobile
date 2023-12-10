@@ -4,7 +4,8 @@ import {
 } from 'react-native';
 import { Button, TextInput, List } from 'react-native-paper';
 import { DatePickerInput } from 'react-native-paper-dates';
-// import colors from '../../../theme/colors';
+import moment from 'moment';
+import colors from '../../../theme/colors';
 import commonStyles from '../../../theme/commonStyles';
 import Container from '../../common/Container';
 import { useProfile } from '../../hoc/ProfileContext';
@@ -14,9 +15,7 @@ function CreateTaskScreen({ navigation }) {
   const { profile } = useProfile();
   console.log(profile);
 
-  const [creatorId, setCreatorId] = useState('');
   const [assignedUser, setAssignedUser] = useState([]);
-  const [homeId, setHomeId] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState();
@@ -34,7 +33,7 @@ function CreateTaskScreen({ navigation }) {
         name,
         description,
         assignedUser,
-        dueDate,
+        dueDate: moment(dueDate).format('YYYY-MM-DD'),
       };
       console.log(input);
       await createTask(input);
@@ -43,6 +42,8 @@ function CreateTaskScreen({ navigation }) {
       Alert.alert('Unsuccessful', error.message);
     }
   };
+
+  console.log('XXX ASIGNED USER', assignedUser);
 
   return (
     <Container>
@@ -76,19 +77,36 @@ function CreateTaskScreen({ navigation }) {
           onChange={(d) => setDueDate(d)}
           inputMode="start"
         />
-        <Text style={commonStyles.displayHeading}>Assign Task to:</Text>
-        {profile.home.users.map((username) => (
-          <TouchableOpacity
-            key={username}
-            activeOpacity={0.2}
-            onPress={() => setAssignedUser(username)}
-          >
-            <List.Item
-              style={commonStyles.taskListItem}
-              title={username}
-            />
-          </TouchableOpacity>
-        ))}
+        <Text style={commonStyles.displayHeading2}>Assign Task to:</Text>
+        {profile.home.users.map((username) => {
+          const isActive = assignedUser === username;
+
+          return (
+            <TouchableOpacity
+              key={username}
+              activeOpacity={0.2}
+              onPress={() => setAssignedUser(username)}
+            >
+              <List.Item
+                style={[commonStyles.taskListItem,
+                  {
+                    backgroundColor: isActive
+                      ? colors.primary.main
+                      : colors.primary.light60,
+                  }]}
+                title={username}
+                titleStyle={{ color: isActive ? '#fff' : '#000' }}
+                right={(props) => (
+                  <List.Icon
+                    {...props}
+                    icon={isActive ? 'checkbox-marked' : 'checkbox-blank-outline'}
+                    color={isActive ? '#fff' : '#000'}
+                  />
+                )}
+              />
+            </TouchableOpacity>
+          );
+        })}
         <View style={commonStyles.buttonContainer}>
           <Button mode="contained" onPress={handleSubmit}>Add Task</Button>
 
