@@ -1,7 +1,7 @@
 import {
-  addDoc, collection, deleteDoc, doc, getDoc, setDoc,
+  addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, setDoc, where,
 } from 'firebase/firestore';
-import { auth, db } from './firebaseConfig';
+import { db } from './firebaseConfig';
 import { fetchHome } from './homeApi';
 
 const taskCollection = collection(db, 'tasks');
@@ -43,6 +43,56 @@ export const fetchTask = async (id) => {
   } catch ({ message }) {
     throw new Error(message);
   }
+};
+
+export const fetchUserTasks = async (queryFields) => {
+  // SAMPLE QUERY FIELDS
+  // const query = {
+  //   userId: 'testUser',
+  //   // date: '2022-12-9',
+  // };
+  const { userId, date } = queryFields;
+
+  if (!userId) throw new Error('User ID is required');
+
+  let taskQuery;
+
+  if (date) {
+    taskQuery = query(taskCollection, where('assignedUser', '==', userId), where('dueDate', '==', date));
+  } else {
+    taskQuery = query(taskCollection, where('assignedUser', '==', userId));
+  }
+
+  const taskSnapshots = await getDocs(taskQuery);
+
+  const tasks = taskSnapshots.docs.map((snap) => ({ ...snap.data(), id: snap.id }));
+
+  return tasks;
+};
+
+export const fetchHomeTasks = async (queryFields) => {
+  // SAMPLE QUERY FIELDS
+  // const query = {
+  //   homeId: 'home1',
+  //   date: '2022-12-9',
+  // };
+  const { homeId, date } = queryFields;
+
+  if (!homeId) throw new Error('User ID is required');
+
+  let taskQuery;
+
+  if (date) {
+    taskQuery = query(taskCollection, where('homeId', '==', homeId), where('dueDate', '==', date));
+  } else {
+    taskQuery = query(taskCollection, where('homeId', '==', homeId));
+  }
+
+  const taskSnapshots = await getDocs(taskQuery);
+
+  const tasks = taskSnapshots.docs.map((snap) => ({ ...snap.data(), id: snap.id }));
+
+  return tasks;
 };
 
 export const updateTask = async (input) => {
