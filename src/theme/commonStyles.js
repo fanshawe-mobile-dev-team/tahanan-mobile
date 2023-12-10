@@ -71,7 +71,7 @@ const commonStyles = StyleSheet.create({
     fontWeight: 'bold',
     marginVertical: 12,
     textAlign: 'center',
-    fontSize: 22,
+    fontSize: 28,
     color: colors.primary.main,
     marginHorizontal: 16,
   },
