@@ -150,7 +150,7 @@ function HomeProfileScreen() {
         Home Members:
       </Text>
       {home.users?.map((user) => (
-        <Chip icon="user" key={user} style={styles.userList}>{user}</Chip>
+        <Chip icon="account-circle" key={user} style={styles.userList}>{user}</Chip>
       ))}
 
       {isOwner && homeRequests?.length
