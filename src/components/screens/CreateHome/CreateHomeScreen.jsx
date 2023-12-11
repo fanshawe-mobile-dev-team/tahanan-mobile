@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
 
 function CreateHomeScreen({ navigation }) {
   const { profile, setHome } = useProfile();
-  const [name, setName] = useState('home1');
-  const [description, setDescription] = useState('This is an awesome home!');
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
 
   const handleSubmit = async () => {
     try {

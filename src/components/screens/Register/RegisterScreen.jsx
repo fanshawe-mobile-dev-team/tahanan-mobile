@@ -10,12 +10,12 @@ import Container from '../../common/Container';
 
 function RegisterScreen({ navigation }) {
   const { login } = useProfile();
-  const [email, setEmail] = useState('test@email.com');
-  const [password, setPassword] = useState('password');
-  const [phone, setPhone] = useState('1234567890');
-  const [username, setUsername] = useState('testUser');
-  const [firstName, setFirstName] = useState('John');
-  const [lastName, setLastName] = useState('Doe');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
+  const [username, setUsername] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
 
   const passwordRef = useRef();
   const phoneRef = useRef();

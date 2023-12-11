@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
 function LoginScreen({ navigation }) {
   const { login } = useProfile();
 
-  const [email, setEmail] = useState('test@email.com');
-  const [password, setPassword] = useState('password');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showError, setShowError] = useState(false);
 
   const passwordRef = useRef();
