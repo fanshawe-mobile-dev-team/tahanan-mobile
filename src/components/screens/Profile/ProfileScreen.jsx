@@ -5,7 +5,7 @@ import {
   View,
 } from 'react-native';
 import {
-  Button, Avatar, Chip, List,
+  Button, Avatar, List,
 } from 'react-native-paper';
 import { useProfile } from '../../hoc/ProfileContext';
 import Container from '../../common/Container';
